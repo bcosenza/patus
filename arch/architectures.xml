@@ -1,5 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <architectureTypes xsi:noNamespaceSchemaLocation="../src/ch/unibas/cs/hpwc/patus/arch/arch-config.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!-- ARM Neon architecture (OpenMP parallelization not yet) -->
+		<architectureType name="ARM_NEON">
+		<codegenerator src-suffix="c" backend="OpenMP" use-function-pointers="true"/>
+		<parallelism>
+			<level number="1" has-explicit-local-datacopy="false" async-IO="true">
+				<barrier type="pragma" implementation="omp barrier"/>
+			</level>
+		</parallelism>
+		<datatypes>
+			<!-- declare NEON datatypes -->
+			<!-- restrict alignment to 16 bytes -->
+			<datatype basetype="float"  name="float32x4_t"  simd-vector-length="4" width="128" alignment="16"/>
+<!--			<datatype basetype="double" name="double64x2_t" simd-vector-length="2" width="128" alignment="16"/>  -->
+		</datatypes>
+		<declspecs>
+			<declspec type="restrictedpointer" specifiers="__restrict__"/>
+		</declspecs>
+		<intrinsics>
+			<!-- intrinsics for double precision arithmetic operations -->
+<!--
+			<intrinsic base-name="unary_minus" name="neg_pd" datatype="__m128d"/>
+			<intrinsic base-name="plus" name="_mm_add_pd" datatype="__m128d"/>
+			<intrinsic base-name="minus" name="_mm_sub_pd" datatype="__m128d"/>
+			<intrinsic base-name="multiply" name="_mm_mul_pd" datatype="__m128d"/>
+			<intrinsic base-name="divide" name="_mm_div_pd" datatype="__m128d"/>
+			<intrinsic base-name="sqrt" name="_mm_sqrt_pd" datatype="__m128d"/>
+			<intrinsic base-name="min" name="_mm_min_pd" datatype="__m128d"/>
+			<intrinsic base-name="max" name="_mm_max_pd" datatype="__m128d"/>
+-->			
+			<!-- ssemathlib.h -->
+<!--			
+			<intrinsic base-name="ceil" name="ceil_pd" datatype="__m128d"/>
+			<intrinsic base-name="floor" name="floor_pd" datatype="__m128d"/>
+			<intrinsic base-name="abs" name="abs_pd" datatype="__m128d"/>
+			<intrinsic base-name="exp" name="exp_pd" datatype="__m128d"/>
+			<intrinsic base-name="log" name="log_pd" datatype="__m128d"/>
+			<intrinsic base-name="log10" name="log10_pd" datatype="__m128d"/>
+			<intrinsic base-name="pow" name="pow_pd" datatype="__m128d"/>
+			<intrinsic base-name="sin" name="sin_pd" datatype="__m128d"/>
+			<intrinsic base-name="cos" name="cos_pd" datatype="__m128d"/>
+			<intrinsic base-name="tan" name="tan_pd" datatype="__m128d"/>
+			<intrinsic base-name="asin" name="asin_pd" datatype="__m128d"/>
+			<intrinsic base-name="acos" name="acos_pd" datatype="__m128d"/>
+			<intrinsic base-name="atan" name="atan_pd" datatype="__m128d"/>
+			<intrinsic base-name="atan2" name="atan2_pd" datatype="__m128d"/>
+			<intrinsic base-name="clamp0" name="clamp0_pd" datatype="__m128d"/>
+			<intrinsic base-name="clamp0if" name="clamp0if_pd" datatype="__m128d"/>
+-->
+						
+			<!-- intrinsics for single precision arithmetic operations -->
+			<intrinsic base-name="unary_minus" name="neg_ps" datatype="float32x4_t"/> <!-- TODO  -->
+			<intrinsic base-name="plus" name="vaddq_f32" datatype="float32x4_t"/>
+			<intrinsic base-name="minus" name="vsubq_f32" datatype="float32x4_t"/>
+			<intrinsic base-name="multiply" name="vmulq_f32" datatype="float32x4_t"/>
+			<intrinsic base-name="divide" name="_mm_div_ps" datatype="float32x4_t"/> <!-- TODO  -->
+			<intrinsic base-name="sqrt" name="_mm_sqrt_ps" datatype="float32x4_t"/> <!-- TODO  -->
+			<intrinsic base-name="min" name="vminq_f32" datatype="float32x4_t"/> 
+			<intrinsic base-name="max" name="vmaxq_f32" datatype="float32x4_t"/>
+			<!-- ssemathlib.h -->
+			<intrinsic base-name="ceil" name="ceil_ps" datatype="float32x4_t"/>
+			<intrinsic base-name="floor" name="floor_ps" datatype="float32x4_t"/>
+			<intrinsic base-name="abs" name="vabdq_f32" datatype="float32x4_t"/> <!-- abs_ps  --> 
+			<intrinsic base-name="exp" name="exp_ps" datatype="float32x4_t"/>
+			<intrinsic base-name="log" name="log_ps" datatype="float32x4_t"/>
+			<intrinsic base-name="log10" name="log10_ps" datatype="float32x4_t"/>
+			<intrinsic base-name="pow" name="pow_ps" datatype="float32x4_t"/>
+			<intrinsic base-name="sin" name="sin_ps" datatype="float32x4_t"/>
+			<intrinsic base-name="cos" name="cos_ps" datatype="float32x4_t"/>
+			<intrinsic base-name="tan" name="tan_ps" datatype="float32x4_t"/>
+			<intrinsic base-name="asin" name="asin_ps" datatype="float32x4_t"/>
+			<intrinsic base-name="acos" name="acos_ps" datatype="float32x4_t"/>
+			<intrinsic base-name="atan" name="atan_ps" datatype="float32x4_t"/>
+			<intrinsic base-name="atan2" name="atan2_ps" datatype="float32x4_t"/>
+			<intrinsic base-name="clamp0" name="clamp0_ps" datatype="float32x4_t"/>
+			<intrinsic base-name="clamp0if" name="clamp0if_ps" datatype="float32x4_t"/>
+			
+			<!-- non-arithmetic intrinsics -->
+		</intrinsics>
+		<includes>
+			<include file="omp.h"/>
+			<include file="arm_neon.h"/>
+<!--
+			<include file="xmmintrin.h"/>
+			<include file="emmintrin.h"/>
+			<include file="ssemathlib.h"/>
+			<include file="math.h"/>
+ -->			
+		</includes>
+		<build compiler-command="make" harness-template-dir="ARM_NEON"/>
+	</architectureType>
+	<!--                                                                 end of ARM NEON        -->
+	
+	
+	
 	<!-- x86_64 architecture with SSE, OpenMP parallelization -->
 	<architectureType name="x86_64">
 		<codegenerator src-suffix="c" backend="OpenMP" use-function-pointers="true"/>
