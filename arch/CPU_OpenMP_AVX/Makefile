@@ -1,10 +1,8 @@
 #
-# Makefile for Patus stencil benchmark. 
+# Makefile for Patus stencil benchmark
 #
 # Note: $(PATUS_*) variables will be automatically replaced by the
 # required runtime files by Patus.
-#
-# gcc for natiove copilation, arm-linux-gnueabi-gcc for cross compilation on x86 to targe ARM
 #
 
 UNAME_S := $(shell uname -s)
@@ -12,7 +10,7 @@ ifeq ($(UNAME_S), Darwin)
 	CC = /usr/local/bin/gcc
 	GNUPLOT = /Applications/Gnuplot.app/Contents/Resources/bin/gnuplot
 else
-	CC = arm-linux-gnueabi-gcc
+	CC = gcc
 	GNUPLOT = gnuplot
 endif
 
