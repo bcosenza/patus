@@ -1,0 +1,34 @@
+stencil wave (
+	float grid U(0 .. x_max-1, 0 .. y_max-1, 0 .. z_max-1), 
+	float param fMin,
+	float param fDX,
+	float param fDT_DX_sq)
+{
+	domainsize = (2 .. x_max-3, 2 .. y_max-3, 2 .. z_max-3);
+
+	operation
+	{
+		// Define a coefficient array.
+		// Note that the lower and upper bounds can be arbitrary integers.
+		
+		float c0 = 2 - 15/2 * fDT_DX_sq;
+		float c1 = 4/3 * fDT_DX_sq;
+		float c2 = -1/12 * fDT_DX_sq;		
+			
+		// Use the compile-time reduction "sum" to sum up the neighbor points
+		// the set preceding the sum function defines the indices which to sum over.
+		//
+		// Sets are specified in the set-builder notation; the first part, left of the
+		// ":", defines the variables and assigns value ranges to them; in the second,
+		// optional part, right of the ":", conditions for the variables can be defined.
+		//
+		// Note that (since c[r] is inside the sum) this will product more Flops
+		// than strictly necessary.
+		
+		U[x, y, z; t+1] =
+			c0 * U[x, y, z; t] - U[x, y, z; t-1] +
+			( { i=-1..1, j=-1..1, k=-1..1 : i^2+j^2+k^2 == 1 } 
+			sum(c0 * U[x+0*i,y+0*j,z+0*k; t] + c1 * U[x+1*i,y+1*j,z+1*k; t] + c2 * U[x+2*i,y+2*j,z+2*k; t] ) );
+//				sum(c[r] * U[x+r*i,y+r*j,z+r*k; t])
+	}
+}

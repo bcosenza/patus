@@ -1,0 +1,27 @@
+/* Read 8 horizontal points, from [x-4,y] to [x+3,y] */
+stencil hor_interp (
+  float grid V,
+  float param k1, float param k2, float param k3, float param k4,
+  float param k5, float param k6, float param k7, float param k8
+)
+{
+  domainsize = (1 .. width, 1 .. height);
+
+  operation
+  {
+    V[x, y; t] = 
+    
+//      k1 * V[x,   y] + k2 * V[x+1, y] + k3 * V[x+2, y] + k4 * V[x+3, y]
+//    + k5 * V[x+4, y] + k6 * V[x+5, y] + k7 * V[x+6, y] + k8 * V[x+7, y];
+
+      k1 * V[x-4,   y] + k2 * V[x-3, y] + k3 * V[x-2, y] + k4 * V[x-1, y]
+    + k5 * V[x  , y]   + k6 * V[x+1, y] + k7 * V[x+2, y] + k8 * V[x+3, y];
+
+//      k1 * V[x+3,   y] + k2 * V[x+2, y] + k3 * V[x+1, y] + k4 * V[x, y]
+//    + k5 * V[x-1, y]   + k6 * V[x-2, y] + k7 * V[x-3, y]; // + k8 * V[x+4, y];
+
+    
+  }
+
+}
+

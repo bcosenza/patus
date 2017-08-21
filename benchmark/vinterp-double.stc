@@ -1,0 +1,27 @@
+/* Read 8 vertical points, from [x,y-4] to [x,y+3] */
+stencil ver_interp (
+  double grid V,
+  double param k1, double param k2, double param k3, double param k4,
+  double param k5, double param k6, double param k7, double param k8
+  )
+{
+  domainsize = (1 .. width, 1 .. height);
+
+  operation
+  {
+    V[x, y; t+1] = 
+//      k1 * V[x, y; t]   + k2 * V[x, y+1; t] + k3 * V[x, y+2; t] + k4 * V[x, y+3; t]
+//    + k5 * V[x, y+4; t] + k6 * V[x, y+5; t] + k7 * V[x, y+6; t] + k7 * V[x, y+7; t];
+
+        k1 * V[x, y-4; t] + k2 * V[x, y-3; t] + k3 * V[x, y-2; t] + k4 * V[x, y-1; t]
+      + k5 * V[x, y  ; t] + k6 * V[x, y+1; t] + k7 * V[x, y+2; t] + k7 * V[x, y+3; t];
+
+//        k1 * V[x, y+3; t] + k2 * V[x, y+2; t] + k3 * V[x, y+1; t] + k4 * V[x, y; t]
+//      + k5 * V[x, y-1; t] + k6 * V[x, y-2; t] + k7 * V[x, y-3; t]; // + k7 * V[x, y+4; t];
+            
+      
+  }
+
+}
+
+

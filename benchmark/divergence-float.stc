@@ -1,0 +1,17 @@
+stencil divergence (
+	float grid V(0 .. x_max+1, 0 .. y_max+1, 0 .. z_max+1),
+	const float grid Ux(0 .. x_max+1, 0 .. y_max+1, 0 .. z_max+1),
+	const float grid Uy(0 .. x_max+1, 0 .. y_max+1, 0 .. z_max+1),
+	const float grid Uz(0 .. x_max+1, 0 .. y_max+1, 0 .. z_max+1),
+	float param alpha, float param beta, float param gamma)
+{
+	domainsize = (1 .. x_max, 1 .. y_max, 1 .. z_max);
+
+	operation
+	{
+		V[x, y, z; t] =
+			alpha * (Ux[x+1, y, z] - Ux[x-1, y, z]) +
+			beta  * (Uy[x, y+1, z] - Uy[x, y-1, z]) +
+			gamma * (Uz[x, y, z+1] - Uz[x, y, z-1]);
+	}
+}
