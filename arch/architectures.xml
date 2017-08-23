@@ -2,7 +2,7 @@
 <architectureTypes xsi:noNamespaceSchemaLocation="../src/ch/unibas/cs/hpwc/patus/arch/arch-config.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<!-- ARM Neon architecture (OpenMP parallelization not yet) -->
 		<architectureType name="ARM_NEON">
-		<codegenerator src-suffix="c" backend="OpenMP" use-function-pointers="true"/>
+		<codegenerator src-suffix="c" backend="OpenMP_ARM" use-function-pointers="true"/>
 		<parallelism>
 			<level number="1" has-explicit-local-datacopy="false" async-IO="true">
 				<barrier type="pragma" implementation="omp barrier"/>
@@ -12,7 +12,7 @@
 			<!-- declare NEON datatypes -->
 			<!-- restrict alignment to 16 bytes -->
 			<datatype basetype="float"  name="float32x4_t"  simd-vector-length="4" width="128" alignment="16"/>
-<!--			<datatype basetype="double" name="double64x2_t" simd-vector-length="2" width="128" alignment="16"/>  -->
+			<datatype basetype="double" name="double64x2_t" simd-vector-length="2" width="128" alignment="16"/>  
 		</datatypes>
 		<declspecs>
 			<declspec type="restrictedpointer" specifiers="__restrict__"/>
@@ -50,19 +50,19 @@
 -->
 						
 			<!-- intrinsics for single precision arithmetic operations -->
-			<intrinsic base-name="unary_minus" name="neg_ps" datatype="float32x4_t"/> <!-- TODO  -->
+<!-- 			<intrinsic base-name="unary_minus" name="neg_ps" datatype="float32x4_t"/> TODO  -->
 			<intrinsic base-name="plus" name="vaddq_f32" datatype="float32x4_t"/>
 			<intrinsic base-name="minus" name="vsubq_f32" datatype="float32x4_t"/>
 			<intrinsic base-name="multiply" name="vmulq_f32" datatype="float32x4_t"/>
-			<intrinsic base-name="divide" name="_mm_div_ps" datatype="float32x4_t"/> <!-- TODO  -->
-			<intrinsic base-name="sqrt" name="_mm_sqrt_ps" datatype="float32x4_t"/> <!-- TODO  -->
+<!-- 			<intrinsic base-name="divide" name="_mm_div_ps" datatype="float32x4_t"/>  TODO  -->
+<!--			<intrinsic base-name="sqrt" name="_mm_sqrt_ps" datatype="float32x4_t"/>  TODO  -->
 			<intrinsic base-name="min" name="vminq_f32" datatype="float32x4_t"/> 
 			<intrinsic base-name="max" name="vmaxq_f32" datatype="float32x4_t"/>
 			<!-- ssemathlib.h -->
-			<intrinsic base-name="ceil" name="ceil_ps" datatype="float32x4_t"/>
+<!--		<intrinsic base-name="ceil" name="ceil_ps" datatype="float32x4_t"/>
 			<intrinsic base-name="floor" name="floor_ps" datatype="float32x4_t"/>
-			<intrinsic base-name="abs" name="vabdq_f32" datatype="float32x4_t"/> <!-- abs_ps  --> 
-			<intrinsic base-name="exp" name="exp_ps" datatype="float32x4_t"/>
+			<intrinsic base-name="abs" name="vabdq_f32" datatype="float32x4_t"/> --> <!-- abs_ps  --> 
+<!--    		<intrinsic base-name="exp" name="exp_ps" datatype="float32x4_t"/>
 			<intrinsic base-name="log" name="log_ps" datatype="float32x4_t"/>
 			<intrinsic base-name="log10" name="log10_ps" datatype="float32x4_t"/>
 			<intrinsic base-name="pow" name="pow_ps" datatype="float32x4_t"/>
@@ -73,20 +73,16 @@
 			<intrinsic base-name="acos" name="acos_ps" datatype="float32x4_t"/>
 			<intrinsic base-name="atan" name="atan_ps" datatype="float32x4_t"/>
 			<intrinsic base-name="atan2" name="atan2_ps" datatype="float32x4_t"/>
+-->			
 			<intrinsic base-name="clamp0" name="clamp0_ps" datatype="float32x4_t"/>
 			<intrinsic base-name="clamp0if" name="clamp0if_ps" datatype="float32x4_t"/>
 			
 			<!-- non-arithmetic intrinsics -->
 		</intrinsics>
 		<includes>
-			<include file="omp.h"/>
 			<include file="arm_neon.h"/>
-<!--
-			<include file="xmmintrin.h"/>
-			<include file="emmintrin.h"/>
-			<include file="ssemathlib.h"/>
+			<include file="omp.h"/>			
 			<include file="math.h"/>
- -->			
 		</includes>
 		<build compiler-command="make" harness-template-dir="ARM_NEON"/>
 	</architectureType>

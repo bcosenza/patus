@@ -15,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import ch.unibas.cs.hpwc.patus.codegen.CodeGeneratorSharedObjects;
 import ch.unibas.cs.hpwc.patus.codegen.IInnermostLoopCodeGenerator;
 import ch.unibas.cs.hpwc.patus.codegen.backend.assembly.x86_64.X86_64InnermostLoopCodeGenerator;
+import ch.unibas.cs.hpwc.patus.codegen.backend.arm.OpenMPARMCodeGenerator;
 import ch.unibas.cs.hpwc.patus.codegen.backend.cuda.CUDA1DCodeGenerator;
 import ch.unibas.cs.hpwc.patus.codegen.backend.cuda.CUDA4CodeGenerator;
 import ch.unibas.cs.hpwc.patus.codegen.backend.cuda.CUDACodeGenerator;
@@ -38,6 +39,8 @@ public class BackendFactory
 			throw new RuntimeException ("No backend provided in the configuration.");
 
 		// try to instantiate by name
+		if ("OpenMP_ARM".equals (strBackend))
+			return new OpenMPARMCodeGenerator (data);
 		if ("OpenMP".equals (strBackend))
 			return new OpenMPCodeGenerator (data);
 		if ("OpenMP_AVX".equals (strBackend))

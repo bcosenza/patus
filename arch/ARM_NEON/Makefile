@@ -12,11 +12,11 @@ ifeq ($(UNAME_S), Darwin)
 	CC = /usr/local/bin/gcc
 	GNUPLOT = /Applications/Gnuplot.app/Contents/Resources/bin/gnuplot
 else
-	CC = arm-linux-gnueabi-gcc
+	CC = arm-linux-gnueabihf-gcc
 	GNUPLOT = gnuplot
 endif
 
-CFLAGS = -O3 -g -mavx -fopenmp -I.
+CFLAGS = -O3 -fopenmp -mfloat-abi=softfp -mfpu=neon -I.
 
 
 bench: kernel.o driver.o $(PATUS_RUNTIME_OBJECT_FILES)
