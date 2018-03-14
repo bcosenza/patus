@@ -11,8 +11,8 @@
 		<datatypes>
 			<!-- declare NEON datatypes -->
 			<!-- restrict alignment to 16 bytes -->
-			<datatype basetype="float"  name="float32x4_t"  simd-vector-length="4" width="128" alignment="16"/>
-			<datatype basetype="double" name="double64x2_t" simd-vector-length="2" width="128" alignment="16"/>  
+			<datatype basetype="float"  name="float32x4_t" simd-vector-length="4" width="128" alignment="16"/>
+			<datatype basetype="double" name="float64x2_t" simd-vector-length="2" width="128" alignment="16"/>
 		</datatypes>
 		<declspecs>
 			<declspec type="restrictedpointer" specifiers="__restrict__"/>

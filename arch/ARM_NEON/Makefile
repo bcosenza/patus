@@ -16,7 +16,7 @@ else
 	GNUPLOT = gnuplot
 endif
 
-CFLAGS = -O3 -fopenmp -mfloat-abi=softfp -mfpu=neon -I.
+CFLAGS = -O3 -fopenmp -mfpu=neon -I.
 
 
 bench: kernel.o driver.o $(PATUS_RUNTIME_OBJECT_FILES)
