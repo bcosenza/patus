@@ -1,0 +1,109 @@
+tencil Tune's Feature Encoding ==================
+ 
+ + Creation (Biagio), October 24, 2015
+ + New features are supported (Biagio), February 10, 2016
+
+This document explains how the feature representation of a stencil is performed in Stencil Tune. 
+This schema is directly used in many parts of the system: 
+-> in the source (package stenciltune):
+ * InputParams and ExecutionParams have a toFeatureVector() method which encodes Parameters to FeatureVector. 
+ * FeatureVector, InputParams, ExecutionParams, Point2D, Point3D and StencilPattern have a toEncodedString() method which returns the features as a sorted list of index and value, e.g., <id>:<float value>
+ * ExecutionParametersGenerator creates different execution parameters to be used with the same (input kernel, size)
+ 
+ XXX
+ * StencilPattern.java, the method toNormalizedString() prints the vector representation of each point (e.g., Point3d.toNormalizedString() )
+ * ExampleGenerator.java, creates many stencil pattern using the encoding schema of the stencil points (shape encoding)
+ * StencilGenerator creates the training stencil including the features representation of the stencil in the 2nd line 
+-> in the scripts: 
+ * ml_3_stencil_exec.sh, for each stencil execution, a size and tuning features representation are calculated and included 
+ 
+ 
+
+A stencil is represented with a sparse-vector. Each stencil property is encoded in one or more vector index, with a value in [0,1].
+Stencil pattern, buffern num and data type are input features (encoded in InputParams); input size, blocking size, chunk and unroll factor are in ExecutionParams.
+
+
+== Stencil Pattern == [0 to 2220]
+
+We define the stencil size as the number maximum offset of a stencil, with respect of the write point.
+For instance, a 2D Laplacian stencil with pattern points: 
+  + 
+ +++   with points: 0:-1 -1:0 0:0 1:0 0:1
+  + 
+has size 1.
+To make the encoding simpler, we assume that the maximum stencil size is 10 (this is also hand-coded in StencilPattern.java).
+
+A single point in the stencil pattern is encoded as a 1 in the vector (otherwise, zero is assumed). 
+To do that, the point (x,y,z) is linearized using the following formula:
+  int nx = x+maxSize;
+  int ny = y+maxSize;
+  int nz = z+maxSize;
+  index = nx + ny*maxSize + nz*maxSize*maxSize // where maxSize is 10.
+  vec[index] = 1
+
+The position are summed to maxSize in order to be always positive, and then linearized.
+Each point may fall from the minimum point (-10,-10,-10) => 0 
+                            to the maximum (10,10,10)    => 2220
+therefore a stencil pattern uses vector elements in the interval [0,2220]
+You can see more  examples in Point3D.main().
+
+For example, the LaPlacian points (0:-1) (-1:0) (0:0) (1:0) (0:1) are encoded as:  
+  1100:1 1109:1 1110:1 1111:1 1120:1
+that means that: 
+  vec[1100] = 1
+  vec[1109] = 1
+  vec[1110] = 1
+  vec[1111] = 1
+  vec[1120] = 1  
+This encoding works for both 2d and 3d by doing the following assumption: the 2d point (x,y) is the same (same representation) of the 3d point (x,y,0).
+
+
+== Buffer num == [2221]
+We expect to have from 1 to 3 buffers. We encode this linearly on vector's element 2221
+  vec[2221] = (buffer_num-1) / 2
+E.g., for 1, 2 and 3 buffers we will have, respectively, 0.0, 0.5 and 1.0.
+
+
+== Data-type (data-type size) == [2222] 
+Size of the data type (e.g., float rahter than double).
+Currently, this is done in a very naive way, supposing that all buffers have the same type:
+  vec[2222] = 0 if the type is float or int (32 bit)
+  vec[2222] = 1 if the type is double (64 bit)
+
+== Input size  == [2223,2224,2225]
+Input size is encoded in features 2223, 2224 and 2225 for x, y and z, respectively.
+In the current version, we want to support up to 512^3 grid size, for 3d stencil, and up to 8192^2 for 2d stencil.
+Also, we assume that the minimum size is 64^3 and 512^2. If the stencil is 3d, we assume that z=1.
+Form these assumptions, we derive the possible ranges:
+  x in [64,8192] 
+  y in [64,8192]
+  z in [ 1, 512]
+Also, at least in this first version, sizes grows exponentially (*TODO explain why) and are therefore encoded in log-space:
+  vec[2223] = log(size_x)-log(64) / (log(8192)-log(64))   
+  vec[2224] = log(size_y)-log(64) / (log(8192)-log(64))   
+  vec[2225] = log(size_z) / log(512)   
+ 
+
+== Block size == [2226,2227,2228]
+The blocking size is encoded similarly to the input size, on vector's elements: 2226, 2227, and 2228.
+The range is from 8 to 256 for all dimension, with the exception of z, that may also be 1 (like the size) when the stencil is 2d.   
+  vec[2226] = (log(block_x)-log(8)) / (log(256)-log(8))     
+  vec[2227] = (log(block_y)-log(8)) / (log(256)-log(8)) 
+  vec[2228] = log(block_z) / log(256) 
+
+
+== Chunk size == [2229]
+As we only expect chunk size of 1, 2, 4 and 8, we encode it on vector's element 2229 (log-scale)
+  vec[2229] = log(chunk_size) / log(8)   
+
+
+== Unrolling factor == [2230]
+We expect the unrolling factor to be 0, 1, 2, 4, 8. Note that zero is included. We encode it on vector's element 2230 in log-scale
+  vec[2230] = if (unroll == 0 ) => 0
+              else              => (log(unroll)+1) / (log(8)+1))
+
+
+
+Currently, a number of features are not modeled by our system.
+E.g., there is only a minimal support for the buffer type (double, float, int, and assuming that all will have the same type); t-2 time dependency in the pattern does not have a specific feature; the pattern itself only uses standard stencil shapes (sufficent for most the codes, anyway).
+
