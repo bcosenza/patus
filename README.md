@@ -9,9 +9,9 @@ The Patus compiler is a project by Matthias Christen.
 
 # About Patus-AA
 
-This project extends the original Patus compiler inmultiple way:
-First, it add a new auto-tuning framework based on machine learning. The framework introduces a training code generator that creates synthetic stencil codes to be used for model trainig, and use a mathematical formulation to encode input codes to b e sude for modeling model. The model used a novel structural approach based on ordinal regression, where code versions are ranked by performance, and top-ranked is chosen.
-The second extension is a new backendd for ARM processor. The new code generator supports NEON vectorial instructions and integrates the existing multi-threading parallelization.
+This project extends the original Patus compiler in multiple way:
+First, it adds a new auto-tuning framework based on machine learning. The framework introduces a training code generator that creates synthetic stencil codes (used for model trainig), and a feature encoding part that translates input codes into feature vecotr (for modeling). The model uses a novel structural learning approach based on ordinal regression where code versions are ranked by performance, and the predicted top-ranked is chosen by the autotuner.
+The second extension is a new backendd for ARM processor. This new code generator supports NEON vectorial instructions and integrates the existing multi-threading parallelization to have the maximum performance out of ARM-based embedded system such as Raspberry Pi.
 
 This extension of Patus, named Patus-AA, is a project by Biagio Cosenza (TU Berlin) in collaboration with Juan Durillo (LRZ Munich), Stefano Ermon (Stanford University) and Ben Juurlink (TU Berlin).
 
