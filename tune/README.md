@@ -2,7 +2,7 @@
 
 ## Machine Learning-based Auto-Tuning for the Patus Stencil Compiler
  
-Installation information for the stencil tuning framework based on ordinal regeression. 
+This page describe how to instal the stencil tuning framework based on ordinal regeression, included in Patus-AA. 
 Before to start, it is strongly recommended to read the seminal paper that describes the methodology behind the code:
 
 _Cosenza, Durillo, Ermon, and Juurlink. Autotuning Stencil Computations with Structural Ordinal Regression Learning. 
@@ -14,21 +14,19 @@ Therefore, we distinguish two installation scenarios:
 
 1. your target hardware is the same of the one proposed in the paper, then you should:
 
-⋅⋅⋅Install Patus 
+   Install Patus 
 
-⋅⋅⋅Install SVM Rank
+   Install SVM Rank
 
-⋅⋅⋅Run the PATUS-AA stencil autotuner with a prebuilt model  
+   Run the PATUS-AA stencil autotuner with a prebuilt model  
 
 2. you have a target hardware different from the one in the paper, then you shuold:
 
-⋅⋅⋅Install Patus 
+   Install Patus 
 
-⋅⋅⋅Install SVM Rank  
-
-⋅⋅⋅Build a new model that supports your target
-
-⋅⋅⋅Run the PATUS-AA stencil autotuner with your model
+   Install SVM Rank  
+   Build a new model that supports your target
+   Run the PATUS-AA stencil autotuner with your model
 
 The paper also shows results for search based heuristics, mainly used for quality comparison. For those, we have replaced Patus' default autotuner with the JMetal library, which supports a larger set of search heuristics. For more information, check the  'Iterative-Search' section below.
 
