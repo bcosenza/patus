@@ -25,23 +25,23 @@ The paper also shows results for search based heuristics, used for comparison. F
 
 ## Install PATUS-AA 
 
-1) Downloading & Installing PATUS
+### 1 Downloading & Installing PATUS
 
 Requirements:
  - gcc and make 
  - Maxima
-  . > sudo apt-get install maxima
+> sudo apt install maxima
  
  - Patus stencil compiler 
   The script get_patus.sh will download the latest version
   > source get_patus.sh 
   
- - Getting Oracle VM (highly recommended, as the dafault OpenJDK Runtime Environment is very slow!) 
+ - Getting Oracle VM (highly recommended! The dafault OpenJDK Runtime Environment is very slow) 
   > sudo apt-add-repository ppa:webupd8team/java
   > sudo apt-get update
   > sudo apt-get install oracle-java8-installer
-  (if not done yet, you should additionally set JAVA_HOME with something like: export JAVA_HOME=/usr/lib/jvm/java-8-oracle 
-  and add to PATH /usr/lib/jvm/java-8-oracle/bin. To be sure you are really using the Oracle JVM with check: java -version)
+  
+  (if not done yet, you should additionally set JAVA_HOME with something like: export JAVA_HOME=/usr/lib/jvm/java-8-oracle and add to PATH /usr/lib/jvm/java-8-oracle/bin. To be sure you are really using the Oracle JVM with check: java -version)
 
 Optional:
  - Getting Eclipse (for development) 
@@ -52,13 +52,13 @@ Optional:
   > sudo apt-get install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose
 
 
-2) Configure PATUS
+### 2 Configure PATUS
 
 Run the script configure_patus.sh:
   > source configure_patus.sh
  
  
-3) Getting started with PATUS
+### 3 Getting started with PATUS
 
 All scripts starting with the prefix 'patus' allow to test the Patus stencil compiler with default params. 
 For example, you can build and run all the available test benchmarks with the following command (takes about 1h):
