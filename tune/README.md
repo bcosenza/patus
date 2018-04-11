@@ -39,13 +39,14 @@ In the following, we assuming to have a Ubuntu Linux OS, but installation is pre
 First, you need to install gcc, make and Maxima: 
 > sudo apt install gcc make maxima
  
-The you need the Java compiler to compile Patus. We highly recommend to use the Oracle VM, as the default OpenJDK Runtime Environment is very slow while compiling stencil codes through Patus. You can download and install it in this way: 
+The you need the Java compiler to compile Patus. We highly recommend to use the Oracle VM, as the default OpenJDK RE is very slow while compiling stencil codes with Patus. You can download and install it in this way: 
 > sudo apt-add-repository ppa:webupd8team/java
 > sudo apt update
 > sudo apt install oracle-java8-installer
   
 Be sure that your JAVA_HOME is correctly defined, for example with something like: 
-> export JAVA_HOME=/usr/lib/jvm/java-8-oracle and add to PATH /usr/lib/jvm/java-8-oracle/bin. 
+> export JAVA_HOME=/usr/lib/jvm/java-8-oracle and add to PATH /usr/lib/jvm/java-8-oracle/bin 
+
 Check whether you are really using the Oracle JVM with: 
 > java -version
 
@@ -81,13 +82,13 @@ For example, you can build and run all the available test benchmarks with the fo
  
 There are a collection of scripts to build the model and run the TUNE Optimizer
 
-1. [2 sec] Compile the code generator and auto-generate stencil training code patterns 
+1. [~2 sec] Compile the code generator and auto-generate stencil training code patterns 
  > bash ml_1_autogen_stencil.sh
 
-This step will generate  a number of stencil code in 'temp/ml_stencil_code'.
+This step will generate  a number of stencil code in _temp/ml_stencil_code_.
 
 
-2. * [24-32 hours] (Double) compilation of the training stencil codes with Patus and back-end compiler (e.g., gcc). Some automatically generated codes using many samples (e.g., hypercubes) are very slow to compile with Patus. Unfortunately, we couldn't easily fix this issue, thus compilation will take approximately 32 hours on a Xeon E5 (see Table II, "e5" in the paper, for a detailed description). 
+2. [24-32 hours] Double compilation of the training stencil codes with Patus and back-end compiler (e.g, gcc). Some automatically generated codes using many samples (e.g., hypercubes) are very slow to compile with Patus. Unfortunately, we couldn't fix this issue, thus compilation will take approximately 32 hours on a Xeon E5 (see Table II, "e5" in the paper, for a detailed description). 
 
 You can generate and build the code and scripts for a new model, from scratch, (warning: it will take approx. 32 hours!) with:
  > bash ml_2_autocompile.sh
@@ -95,7 +96,7 @@ You can generate and build the code and scripts for a new model, from scratch, (
 After this step, 'temp/ml_stencil_build' will contain the compiled, multi-versioned binary sources.
 
 
-3. * [from minutes to hours] Run all stencil codes  with a set of tuning parameters, and save results in a ranked/qid format. This step is highly parametrized: you can quickly create small dataset with few dozens of run per kernel, or, instead, use a much bigger dataset. E.g., a quick and small dataset can be generated in this way: 
+3. [from minutes to hours] Run all stencil codes  with a set of tuning parameters, and save results in a ranked/qid format. This step is highly parametrized: you can quickly create small dataset with few dozens of run per kernel, or, instead, use a much bigger dataset. E.g., a quick and small dataset can be generated in this way: 
  > bash ml_3_stencil_exec.sh small
 
 Running time of the stencil executions and corresponding encoded values are stored in a number of folder in temp (ml_execution_params, ml_result_raw, ml_result_qid, ml_result_sorted). 
@@ -104,23 +105,27 @@ Supported dataset-size flag are: "small", "medium", "big", and numerical, such a
 For an estimation of the stencil execution time for different datasets, have a look at the paper, Table II.
 
 
-4. [<1 min] Prepare all the collected data for the training phase, using the SVM Rank data format.
+4. [less than 1 min] Prepare all the collected data for the training phase, using the SVM-Rank data format.
  > bash ml_4_prepare_training.sh
  
- This step will create an output file in temp named training_size_SX.txt, where SX is the size of the training set.
- This script will also try to run a python script calculate the Tau distribution of the training dataset. However, this will not work if called directly in this way; to compute this additional information have a look at the scripts 'ml_learning_curve.sh', which sets the right configuration for calculating the Tau distribution.
+ This step will create an output file in temp named _training_size_SX.txt_, where _SX_ is the size of the training set.
+ This script will also try to run a python script calculate the Tau distribution of the training dataset. However, this will not work if called directly in this way; to compute this additional information have a look at the scripts _ml_learning_curve.sh_, which sets the right configuration for calculating the Kendal Tau values.
 
  
-5. [few seconds] Model training using SVM Rank
+5. [few seconds] Model training using SVM-Rank
  > ./svm_rank/svm_rank_learn -c 20.0 ./temp/training_size_*.txt data/model.dat
 
  
-6. [<1 ms] Regression with a test code from the Patus examples (in this case, blur 1024x1024)
+6. [<1 ms] Model inference using SVM-Rank
+ 
+  Regression with a test code from the Patus examples (in this case, blur 1024x1024)
  > ./svm_rank/svm_rank_classify  data/blur_1024_1024.test data/model.dat output.txt
- Successively, with
+ 
+  Successively, with
  > cat output.txt
- you can see the score (a metric for the ordinal distance) for each configutaion in the data/blur_1024_1024.test file.
- The best performing configuration is the one with the smallest score (e.g., line 30), corresponding to the 30 configuraion in the .test file.
+ 
+   you can see the score (a metric for the ordinal distance) for each configutaion in the _data/blur_1024_1024.test_ file.
+   The best performing configuration is the one with the smallest score (e.g., line 30), corresponding to the 30 configuraion in the _.test_ file.
  
 
 ## Install Stencil TUNE with a prebuilt model 
@@ -137,23 +142,21 @@ A number of scripts have been created to reproduce the same test benchmarks you 
 Data for Figure 4, 5, 6 and 7 have been mainly can be generated by these two scripts:
 
 
-[]
+[how long?]
 > bash learning_curve.sh
 Create different datasets with different sizes and same parameters. 
 
 [<20 seconds for each dataset]
 > bash ml_5_evaluate_all.sh
-For each dataset, builds a model with the same parameters  (C=0.01 and linear kernel), does regression and executes the top-ranked configuration.
-If more datasets are available, this step takes longer teme, as it is repeated for each file in: temp/training*.txt.
-
-
+For each dataset, builds a model with the same parameters  (_C=0.01_ and _linear kernel_), does regression and executes the top-ranked configuration.
+If more datasets are available, this step takes longer teme, as it is repeated for each file in: _temp/training*.txt_.
 
 Comparison with iterative search heuristics is discussed in the next section.
  
 A number of python scripts have been used to plot results, copmute statistical distribution and show copmarison between different methods. They are all available in the /source folder (we suggest to copy the txt files on which such scripts work on a different folder).
  
-plot_optimize_all.sh
-plot_search_comparison.sh
+> plot_optimize_all.sh
+> plot_search_comparison.sh
  
  
 ## Reproduce Iterative-Search Results
