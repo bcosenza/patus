@@ -11,14 +11,14 @@ This folder includes a set of bash scripts to reproduce the setup used in the pa
 
 Therefore, we distinguish two installation scenarios:
 1. your target hw is the same of the one proposed in the paper, then you should:
-..Install Patus 
-..Install SVM Rank
-..Install Stencil TUNE with a prebuilt model  
+...Install Patus 
+...Install SVM Rank
+...Install Stencil TUNE with a prebuilt model  
 
 2. you have a different target hw from the one in the paper, tjen you shuold:
-..Install Patus 
-..Install SVM Rank  
-..Install Stencil TUNE with a new model
+...Install Patus 
+...Install SVM Rank  
+...Install Stencil TUNE with a new model
 
 The paper also shows results for search based heuristics, used for comparison. For those, we have replaced Patus deafult autotuner with the JMetal library, which supports a larger set of searh heuristics. Details are listed in the 'Iterative-Search' section below.
 
