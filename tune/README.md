@@ -12,14 +12,16 @@ This folder includes a set of bash scripts to reproduce the setup used in the pa
 
 Therefore, we distinguish two installation scenarios:
 1. your target hardware is the same of the one proposed in the paper, then you should:
+
 ⋅⋅Install Patus 
 ⋅⋅Install SVM Rank
 ⋅⋅Run the PATUS-AA stencil autotuner with a prebuilt model  
 
 2. you have a target hardware different from the one in the paper, then you shuold:
+
 ⋅⋅Install Patus 
 ⋅⋅Install SVM Rank  
-..Build a new model that supports your target
+⋅⋅Build a new model that supports your target
 ⋅⋅Run the PATUS-AA stencil autotuner with your model
 
 The paper also shows results for search based heuristics, mainly used for quality comparison. For those, we have replaced Patus' default autotuner with the JMetal library, which supports a larger set of search heuristics. For more information, check the  'Iterative-Search' section below.
@@ -27,7 +29,7 @@ The paper also shows results for search based heuristics, mainly used for qualit
 
 ## Install PATUS-AA 
 
-### 1 Downloading & Installing PATUS
+### 1. Downloading & Installing PATUS
 
 Requirements:
  - gcc and make 
