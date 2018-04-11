@@ -2,25 +2,27 @@
 
 ## Machine Learning-based Auto-Tuning for the Patus Stencil Compiler
  
-Installation information for the Stencil Tune framework. 
-Before to start, it is strongly recommended to read the paper that describes the methodology behind this code:
+Installation information for the stencil tuning framework based on ordinal regeression. 
+Before to start, it is strongly recommended to read the seminal paper that describes the methodology behind the code:
+
 _Cosenza, Durillo, Ermon, and Juurlink. Autotuning Stencil Computations with Structural Ordinal Regression Learning. 
 In IEEE International Parallel and Distributed Processing Symposium (IPDPS), pages 287-296, 2017._
  
-This folder includes a set of bash scripts to reproduce the setup used in the paper. It is very important to know that, as pointed out in the paper, the preprocessing phase takse very long time (~2 days), due to the long compilation time required by Patus to compile the pattern in the training codes. However, if you have the same processor type of the one used in the paper, you can quickly setup the system by using our pre-built model, therefore creating a fully working installation in few minutes.
+This folder includes a set of bash scripts to reproduce the setup used in the paper. Patus-AA has different installation scenario, and it is very important to know that some (see point 2 below) have a very long the preprocessing phase, which may take up to 2 days of processing (due to the long compilation time required by Patus to compile large pattern in the training codes). However, if you have the same processor type of those used in the paper, you can quickly setup the system in few minutes by using our pre-built models.
 
 Therefore, we distinguish two installation scenarios:
-1. your target hw is the same of the one proposed in the paper, then you should:
-...Install Patus 
-...Install SVM Rank
-...Install Stencil TUNE with a prebuilt model  
+1. your target hardware is the same of the one proposed in the paper, then you should:
+⋅⋅⋅Install Patus 
+⋅⋅⋅Install SVM Rank
+⋅⋅⋅Run the PATUS-AA stencil autotuner with a prebuilt model  
 
-2. you have a different target hw from the one in the paper, tjen you shuold:
-...Install Patus 
-...Install SVM Rank  
-...Install Stencil TUNE with a new model
+2. you have a target hardware different from the one in the paper, then you shuold:
+⋅⋅⋅Install Patus 
+⋅⋅⋅Install SVM Rank  
+...Build a new model that supports your target
+⋅⋅⋅Run the PATUS-AA stencil autotuner with your model
 
-The paper also shows results for search based heuristics, used for comparison. For those, we have replaced Patus deafult autotuner with the JMetal library, which supports a larger set of searh heuristics. Details are listed in the 'Iterative-Search' section below.
+The paper also shows results for search based heuristics, mainly used for quality comparison. For those, we have replaced Patus' default autotuner with the JMetal library, which supports a larger set of search heuristics. For more information, check the  'Iterative-Search' section below.
 
 
 ## Install PATUS-AA 
