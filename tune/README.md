@@ -1,87 +1,93 @@
 # Patus-AA
 
+
 ## Machine Learning-based Auto-Tuning for the Patus Stencil Compiler
  
-Installation information for the Stencil Tune framework. 
-Before to start, it is strongly recommended to read the paper that describes the methodology behind this code:
+This page describe how to instal the stencil tuning framework based on ordinal regeression, included in Patus-AA. 
+Before to start, it is strongly recommended to read the seminal paper that describes the methodology behind the code:
+
 _Cosenza, Durillo, Ermon, and Juurlink. Autotuning Stencil Computations with Structural Ordinal Regression Learning. 
 In IEEE International Parallel and Distributed Processing Symposium (IPDPS), pages 287-296, 2017._
  
-This folder includes a set of bash scripts to reproduce the setup used in the paper. It is very important to know that, as pointed out in the paper, the preprocessing phase takse very long time (~2 days), due to the long compilation time required by Patus to compile the pattern in the training codes. However, if you have the same processor type of the one used in the paper, you can quickly setup the system by using our pre-built model, therefore creating a fully working installation in few minutes.
+This folder includes a set of bash scripts to reproduce the setup used in the paper. All the commands listed in this page assume that youu are in the _/tune_ folder of the Patus-AA project. 
+Patus-AA has different installation scenarios, and it is very important to know that some (see point 2 below) have a very long the preprocessing phase, which may take up to 2 days of processing (due to the long compilation time required by Patus to compile large pattern in the training codes). However, if you have the same processor type of those used in the paper, you can quickly setup the system in few minutes by using our pre-built models.
 
 Therefore, we distinguish two installation scenarios:
-1. your target hw is the same of the one proposed in the paper, then you should:
-  Install Patus 
-  Install SVM Rank
-  Install Stencil TUNE with a prebuilt model  
 
-2. you have a different target hw from the one in the paper, tjen you shuold:
-  Install Patus 
-  Install SVM Rank  
-  Install Stencil TUNE with a new model
+1. if you already have a model for your target hardware (e.g., is the same of the one proposed in the paper), then you should:
 
-The paper also shows results for search based heuristics, used for comparison. For those, we have replaced Patus deafult autotuner with the JMetal library, which supports a larger set of searh heuristics. Details are listed in the 'Iterative-Search' section below.
+   Install Patus 
+   Install SVM Rank
+   Run the PATUS-AA stencil autotuner with a prebuilt model  
+
+2. if you don't have prebuilt model for your target hardware , then you shuold:
+
+   Install Patus 
+   Install SVM Rank  
+   Build a new model that supports your target
+   Run the PATUS-AA stencil autotuner with your model
+
+The paper also shows results for search based heuristics, mainly used for quality comparison. For those, we have replaced Patus' default autotuner with the JMetal library, which supports a larger set of search heuristics. For more information, check the  'Iterative-Search' section below.
 
 
 ## Install PATUS-AA 
 
-1) Downloading & Installing PATUS
+### 1. Installing PATUS
 
-Requirements:
- - gcc and make 
- - Maxima
-  > sudo apt-get install maxima
+In the following, we assuming to have a Ubuntu Linux OS, but installation is pretty similar with other linux distributions.
+
+First, you need to install gcc, make and Maxima: 
+> sudo apt install gcc make maxima
  
- - Patus stencil compiler 
-  The script get_patus.sh will download the latest version
-  > source get_patus.sh 
+The you need the Java compiler to compile Patus. We highly recommend to use the Oracle VM, as the default OpenJDK Runtime Environment is very slow while compiling stencil codes through Patus. You can download and install it in this way: 
+> sudo apt-add-repository ppa:webupd8team/java
+> sudo apt update
+> sudo apt install oracle-java8-installer
   
- - Getting Oracle VM (highly recommended, as the dafault OpenJDK Runtime Environment is very slow!) 
-  > sudo apt-add-repository ppa:webupd8team/java
-  > sudo apt-get update
-  > sudo apt-get install oracle-java8-installer
-  (if not done yet, you should additionally set JAVA_HOME with something like: export JAVA_HOME=/usr/lib/jvm/java-8-oracle 
-  and add to PATH /usr/lib/jvm/java-8-oracle/bin. To be sure you are really using the Oracle JVM with check: java -version)
+Be sure that your JAVA_HOME is correctly defined, for example with something like: 
+> export JAVA_HOME=/usr/lib/jvm/java-8-oracle and add to PATH /usr/lib/jvm/java-8-oracle/bin. 
+Check whether you are really using the Oracle JVM with: 
+> java -version
 
-Optional:
- - Getting Eclipse (for development) 
-  > sudo apt-get install eclipse eclipse-cdt g++
- - GNUplot (used by some Patus's automatic tuning script) 
-  > sudo apt-get install gnuplot
- - Python and Pythons's required libraries (used by StencilTUNE for scripting and plotting)
-  > sudo apt-get install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose
+Optionally, you may install:
+- Eclipse (for development) 
+  > sudo apt install eclipse eclipse-cdt g++
+- GNUplot (used by some Patus's automatic tuning script) 
+  > sudo apt install gnuplot
+- Python and Pythons's required libraries (used by Patus-AA for scripting and plotting)
+  > sudo apt install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose
 
 
-2) Configure PATUS
+### 2 Configure PATUS
 
 Run the script configure_patus.sh:
   > source configure_patus.sh
  
  
-3) Getting started with PATUS
+### 3 Getting started with PATUS
 
-All scripts starting with the prefix 'patus' allow to test the Patus stencil compiler with default params. 
-For example, you can build and run all the available test benchmarks with the following command (takes about 1h):
-  > bash ./patus_all.sh
+All scripts starting with the prefix _patus_ allow you to test the Patus stencil compiler with default parameters (not autotuned). 
+For example, you can build and run all the available test benchmarks with the following command (note: takes about 1h):
+> bash ./patus_all.sh
 
 
 ## Install SVM Rank
  
-1) Downloading & Installing SVM Rank from Cornell's repository
-  > bash ./get_svmrank.sh
+1. Download & Install SVM Rank from Cornell's repository
+> bash ./get_svmrank.sh
 
  
-== Install Stencil TUNE with a new model 
+## Install Stencil TUNE with a new model 
  
 There are a collection of scripts to build the model and run the TUNE Optimizer
 
-1) [2 sec] Compile the code generator and auto-generate stencil training code patterns 
+1. [2 sec] Compile the code generator and auto-generate stencil training code patterns 
  > bash ml_1_autogen_stencil.sh
 
 This step will generate  a number of stencil code in 'temp/ml_stencil_code'.
 
 
-2*) [24-32 hours] (Double) compilation of the training stencil codes with Patus and back-end compiler (e.g., gcc). Some automatically generated codes using many samples (e.g., hypercubes) are very slow to compile with Patus. Unfortunately, we couldn't easily fix this issue, thus compilation will take approximately 32 hours on a Xeon E5 (see Table II, "e5" in the paper, for a detailed description). 
+2. * [24-32 hours] (Double) compilation of the training stencil codes with Patus and back-end compiler (e.g., gcc). Some automatically generated codes using many samples (e.g., hypercubes) are very slow to compile with Patus. Unfortunately, we couldn't easily fix this issue, thus compilation will take approximately 32 hours on a Xeon E5 (see Table II, "e5" in the paper, for a detailed description). 
 
 You can generate and build the code and scripts for a new model, from scratch, (warning: it will take approx. 32 hours!) with:
  > bash ml_2_autocompile.sh
@@ -89,7 +95,7 @@ You can generate and build the code and scripts for a new model, from scratch, (
 After this step, 'temp/ml_stencil_build' will contain the compiled, multi-versioned binary sources.
 
 
-3*) [from minutes to hours] Run all stencil codes  with a set of tuning parameters, and save results in a ranked/qid format. This step is highly parametrized: you can quickly create small dataset with few dozens of run per kernel, or, instead, use a much bigger dataset. E.g., a quick and small dataset can be generated in this way: 
+3. * [from minutes to hours] Run all stencil codes  with a set of tuning parameters, and save results in a ranked/qid format. This step is highly parametrized: you can quickly create small dataset with few dozens of run per kernel, or, instead, use a much bigger dataset. E.g., a quick and small dataset can be generated in this way: 
  > bash ml_3_stencil_exec.sh small
 
 Running time of the stencil executions and corresponding encoded values are stored in a number of folder in temp (ml_execution_params, ml_result_raw, ml_result_qid, ml_result_sorted). 
@@ -98,18 +104,18 @@ Supported dataset-size flag are: "small", "medium", "big", and numerical, such a
 For an estimation of the stencil execution time for different datasets, have a look at the paper, Table II.
 
 
-4) [<1 min] Prepare all the collected data for the training phase, using the SVM Rank data format.
+4. [<1 min] Prepare all the collected data for the training phase, using the SVM Rank data format.
  > bash ml_4_prepare_training.sh
  
  This step will create an output file in temp named training_size_SX.txt, where SX is the size of the training set.
  This script will also try to run a python script calculate the Tau distribution of the training dataset. However, this will not work if called directly in this way; to compute this additional information have a look at the scripts 'ml_learning_curve.sh', which sets the right configuration for calculating the Tau distribution.
 
  
-5) [few seconds] Model training using SVM Rank
+5. [few seconds] Model training using SVM Rank
  > ./svm_rank/svm_rank_learn -c 20.0 ./temp/training_size_*.txt data/model.dat
 
  
-6) [<1 ms] Regression with a test code from the Patus examples (in this case, blur 1024x1024)
+6. [<1 ms] Regression with a test code from the Patus examples (in this case, blur 1024x1024)
  > ./svm_rank/svm_rank_classify  data/blur_1024_1024.test data/model.dat output.txt
  Successively, with
  > cat output.txt
@@ -117,7 +123,7 @@ For an estimation of the stencil execution time for different datasets, have a l
  The best performing configuration is the one with the smallest score (e.g., line 30), corresponding to the 30 configuraion in the .test file.
  
 
-== Install Stencil TUNE with a prebuilt model 
+## Install Stencil TUNE with a prebuilt model 
 
 Same as above, but replace step (2) with the following:
 
@@ -150,14 +156,14 @@ plot_optimize_all.sh
 plot_search_comparison.sh
  
  
-### Iterative Search 
+## Reproduce Iterative-Search Results
   
-1) be sure to have already configured Patus correctly (including the configure script listed above)
+1. be sure to have already configured Patus correctly (including the configure script listed above)
  
-2) compile all Patus DSLs
+2. compile all Patus DSLs
  > bash patus_all.sh
  
-3) run the iterative optimizer
+3. run the iterative optimizer
  > bash optimize_all.sh
  
  
