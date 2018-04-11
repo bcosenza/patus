@@ -11,18 +11,19 @@ In IEEE International Parallel and Distributed Processing Symposium (IPDPS), pag
 This folder includes a set of bash scripts to reproduce the setup used in the paper. Patus-AA has different installation scenario, and it is very important to know that some (see point 2 below) have a very long the preprocessing phase, which may take up to 2 days of processing (due to the long compilation time required by Patus to compile large pattern in the training codes). However, if you have the same processor type of those used in the paper, you can quickly setup the system in few minutes by using our pre-built models.
 
 Therefore, we distinguish two installation scenarios:
+
 1. your target hardware is the same of the one proposed in the paper, then you should:
 
-⋅⋅Install Patus 
-⋅⋅Install SVM Rank
-⋅⋅Run the PATUS-AA stencil autotuner with a prebuilt model  
+..Install Patus 
+..Install SVM Rank
+..Run the PATUS-AA stencil autotuner with a prebuilt model  
 
 2. you have a target hardware different from the one in the paper, then you shuold:
 
-⋅⋅Install Patus 
-⋅⋅Install SVM Rank  
-⋅⋅Build a new model that supports your target
-⋅⋅Run the PATUS-AA stencil autotuner with your model
+⋅Install Patus 
+⋅Install SVM Rank  
+⋅Build a new model that supports your target
+⋅Run the PATUS-AA stencil autotuner with your model
 
 The paper also shows results for search based heuristics, mainly used for quality comparison. For those, we have replaced Patus' default autotuner with the JMetal library, which supports a larger set of search heuristics. For more information, check the  'Iterative-Search' section below.
 
