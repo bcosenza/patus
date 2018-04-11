@@ -17,7 +17,7 @@ First, it adds a new auto-tuning framework based on machine learning. The framew
 
 The second extension is a new backend for ARM processor. This new code generator supports NEON vectorial instructions and integrates the existing multi-threading parallelization to obtain higher performance on ARM-based embedded system such as Raspberry Pi.
 
-[Testing the ARM NEON backend](neon.md)
+[Testing the ARM NEON backend](./arm-neon.md)
 
 
 This extension of Patus, named Patus-AA, is a project by Biagio Cosenza (TU Berlin) in collaboration with Juan Durillo (LRZ Munich), Stefano Ermon (Stanford University) and Ben Juurlink (TU Berlin).
