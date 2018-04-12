@@ -8,6 +8,7 @@ Before to start, it is strongly recommended to read the seminal paper that descr
 
 _Cosenza, Durillo, Ermon, and Juurlink._ Autotuning Stencil Computations with Structural Ordinal Regression Learning. 
 _In IEEE International Parallel and Distributed Processing Symposium (IPDPS), pages 287-296, 2017._
+
 http://biagiocosenza.com/papers/CosenzaIPDPS17.pdf
  
 This folder includes a set of bash scripts to reproduce the setup used in the paper. All the commands listed in this page assume that youu are in the _/tune_ folder of the Patus-AA project. 
@@ -66,13 +67,13 @@ Optionally, you may install:
   > sudo apt install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose
 
 
-### 2 Configure PATUS
+### 2. Configure PATUS
 
 Run the script configure_patus.sh:
   > source configure_patus.sh
  
  
-### 3 Getting started with PATUS
+### 3. Getting started with PATUS
 
 All scripts starting with the prefix _patus_ allow you to test the Patus stencil compiler with default parameters (not autotuned). 
 For example, you can build and run all the available test benchmarks with the following command (note: takes about 1h):
@@ -164,7 +165,7 @@ A number of python scripts have been used to plot results, compute statistical d
 > plot_search_comparison.sh
  
  
-## Autotuning with Iterative-Search (useful for comparison)
+## Autotuning with Iterative-Search (useful for comparison, or to optimize a single code)
   
 Once you have correctly configured Patus  (see the configuration scripts listed above), you can use the following scripts to test the different autotuning methods based on iterative-compilation with search heuristics.
  
