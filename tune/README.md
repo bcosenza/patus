@@ -168,13 +168,13 @@ A number of python scripts have been used to plot results, compute statistical d
   
 Once you have correctly configured Patus  (see the configuration scripts listed above), you can use the following scripts to test the different autotuning methods based on iterative-compilation with search heuristics.
  
-. compile all Patus DSLs
+1. compile all Patus DSLs
  > bash compile_benchmarks.sh
  
-. run the iterative optimizer based on JMetal
+2. run the iterative optimizer based on JMetal
  > bash search_all.sh
  
-. (optional, not recommended) you can also test Patus default iterative optimizer with the following script:
+3. (optional, not recommended) you can also test Patus default iterative optimizer with the following script:
  > bash patus_autotune.sh
  However, we reccomedn to use the optimizer based on JMetal, as it support a large nuber of search heuristics.
   
