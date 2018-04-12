@@ -71,7 +71,7 @@ Optionally, you may install:
 ```
 - Python and Pythons's required libraries (used by Patus-AA for scripting and plotting)
 ```
-> sudo apt install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose
+> sudo apt install python-numpy python-scipy python-matplotlib 
 ```
 
 
