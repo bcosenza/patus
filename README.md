@@ -9,7 +9,7 @@ The Patus compiler is a project by Matthias Christen.
 
 # About Patus-AA
 
-This project extends the original Patus compiler in multiple ways.
+The Patus-AA project extends the original Patus compiler in different ways.
 First, it adds a new auto-tuning framework based on machine learning. The framework introduces a training code generator that creates synthetic stencil codes (used for model trainig), and a feature encoding part that translates input codes into feature vector (for modeling). The model uses a novel structural learning approach based on ordinal regression where code versions are ranked by performance, and the predicted top-ranked is chosen by the autotuner.
 
 [Installing the machine learning-based autotuner](./tune)
