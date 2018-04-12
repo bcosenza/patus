@@ -1,6 +1,7 @@
 # Patus-AA
 
 
+
 ## Machine Learning-based Auto-Tuning for the Patus Stencil Compiler
  
 This page describe how to instal the stencil tuning framework based on ordinal regeression, included in Patus-AA. 
@@ -29,6 +30,7 @@ Therefore, we distinguish two installation scenarios:
   * Run the PATUS-AA stencil autotuner with your model
 
 The paper also shows results for search based heuristics, mainly used for quality comparison. For those, we have replaced Patus' default autotuner with the JMetal library, which supports a larger set of search heuristics. For more information, check the  'Iterative-Search' section below.
+
 
 
 ## Install PATUS-AA 
@@ -75,12 +77,14 @@ Optionally, you may install:
 ```
 
 
+
 ### 2. Configure PATUS
 
 Run the script configure_patus.sh:
 ```
 > source configure_patus.sh
 ```
+ 
  
  
 ### 3. Getting started with PATUS
