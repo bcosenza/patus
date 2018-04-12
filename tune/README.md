@@ -81,11 +81,18 @@ Optionally, you may install:
 
 ### 2. Configure PATUS
 
-Run the script configure_patus.sh:
+To configure the environment for Patus, a script configure_patus.sh is provided. If no argument is provided, it will assume as that you want to use the the _x86_64 SSE_ backend:
 ```
 > source configure_patus.sh
 ```
- 
+Alternatively, you can also specify the target backend by providing an extra parameter. For instance, you can use the _ARM_NEON_ backend in the following:
+```
+> source configure_patus.sh ARM_NEON
+```
+A list of the supported backends is provided by the command
+```
+> patus --help
+```
  
  
 ### 3. Getting started with PATUS
