@@ -1,6 +1,7 @@
 # Patus-AA
 
 
+
 ## Machine Learning-based Auto-Tuning for the Patus Stencil Compiler
  
 This page describe how to instal the stencil tuning framework based on ordinal regeression, included in Patus-AA. 
@@ -21,7 +22,7 @@ Therefore, we distinguish two installation scenarios:
   * Install SVM Rank   
   * Run the PATUS-AA stencil autotuner with a prebuilt model  
 
-2. if you don't have prebuilt model for your target hardware , then you shuold:
+2. if you don't have a prebuilt model for your target hardware , then you shuold:
 
   * Install Patus    
   * Install SVM Rank     
@@ -29,6 +30,7 @@ Therefore, we distinguish two installation scenarios:
   * Run the PATUS-AA stencil autotuner with your model
 
 The paper also shows results for search based heuristics, mainly used for quality comparison. For those, we have replaced Patus' default autotuner with the JMetal library, which supports a larger set of search heuristics. For more information, check the  'Iterative-Search' section below.
+
 
 
 ## Install PATUS-AA 
@@ -49,13 +51,14 @@ The you need the Java compiler to compile Patus. We highly recommend to use the 
 > sudo apt install oracle-java8-installer
 ```
 
-Be sure that your JAVA_HOME is correctly defined, for example with: 
+Be sure to set your JAVA_HOME environment variable to point to the installed JDK. Additionally, set your PATH environment variable. For example, run the following commands if using Solaris.
 ```
 > export JAVA_HOME=/usr/lib/jvm/java-8-oracle 
+> PATH=$JAVA_HOME/bin:$PATH;
+> export PATH
 ```
-also add to PATH the /usr/lib/jvm/java-8-oracle/bin folder.
 
-Check whether you are really using the Oracle JVM with: 
+In case of multiple JAva installation, you can check whether you are really using the Oracle JVM with: 
 ```
 > java -version
 ```
@@ -75,12 +78,14 @@ Optionally, you may install:
 ```
 
 
+
 ### 2. Configure PATUS
 
 Run the script configure_patus.sh:
 ```
 > source configure_patus.sh
 ```
+ 
  
  
 ### 3. Getting started with PATUS
