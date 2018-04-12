@@ -51,13 +51,14 @@ The you need the Java compiler to compile Patus. We highly recommend to use the 
 > sudo apt install oracle-java8-installer
 ```
 
-Be sure that your JAVA_HOME is correctly defined, for example with: 
+Be sure to set your JAVA_HOME environment variable to point to the installed JDK. Additionally, set your PATH environment variable. For example, run the following commands if using Solaris.
 ```
 > export JAVA_HOME=/usr/lib/jvm/java-8-oracle 
+> PATH=$JAVA_HOME/bin:$PATH;
+> export PATH
 ```
-also add to PATH the /usr/lib/jvm/java-8-oracle/bin folder.
 
-Check whether you are really using the Oracle JVM with: 
+In case of multiple JAva installation, you can check whether you are really using the Oracle JVM with: 
 ```
 > java -version
 ```
