@@ -21,7 +21,7 @@
 #   for each qid, runtime results:           temp/ml_result_qid
 #   for each qid, sorted runtime results:    temp/ml_result_sorted
 
-arch="x86_64 AVX"
+arch=$PATUS_ARCH
 strategy="$PATUS_HOME/strategy/cacheblocked.stg"
 create_inline_asm="yes"
 script="java -cp jar/stenciltune.jar stenciltune.ExecutionParametersGenerator"
