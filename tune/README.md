@@ -21,7 +21,7 @@ Therefore, we distinguish two installation scenarios:
   * Install SVM Rank   
   * Run the PATUS-AA stencil autotuner with a prebuilt model  
 
-2. if you don't have prebuilt model for your target hardware , then you shuold:
+2. if you don't have a prebuilt model for your target hardware , then you shuold:
 
   * Install Patus    
   * Install SVM Rank     
