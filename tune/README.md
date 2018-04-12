@@ -8,7 +8,6 @@ Before to start, it is strongly recommended to read the seminal paper that descr
 
 _Cosenza, Durillo, Ermon, and Juurlink._ Autotuning Stencil Computations with Structural Ordinal Regression Learning. 
 _In IEEE International Parallel and Distributed Processing Symposium (IPDPS), pages 287-296, 2017._
-
 http://biagiocosenza.com/papers/CosenzaIPDPS17.pdf
  
 This folder includes a set of bash scripts to reproduce the setup used in the paper. All the commands listed in this page assume that youu are in the _/tune_ folder of the Patus-AA project. 
@@ -18,21 +17,18 @@ Therefore, we distinguish two installation scenarios:
 
 1. if you already have a model for your target hardware (e.g., is the same of the one proposed in the paper), then you should:
 
-   Install Patus 
+  *Install Patus 
    
-   Install SVM Rank
+  *Install SVM Rank
    
-   Run the PATUS-AA stencil autotuner with a prebuilt model  
+  *Run the PATUS-AA stencil autotuner with a prebuilt model  
 
 2. if you don't have prebuilt model for your target hardware , then you shuold:
 
-   Install Patus 
-   
-   Install SVM Rank  
-   
-   Build a new model that supports your target
-   
-   Run the PATUS-AA stencil autotuner with your model
+  *Install Patus    
+  *Install SVM Rank     
+  *Build a new model that supports your target   
+  *Run the PATUS-AA stencil autotuner with your model
 
 The paper also shows results for search based heuristics, mainly used for quality comparison. For those, we have replaced Patus' default autotuner with the JMetal library, which supports a larger set of search heuristics. For more information, check the  'Iterative-Search' section below.
 
