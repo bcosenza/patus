@@ -34,7 +34,7 @@ stencil_name="blur-float.stc"
 stencil_path="$STENCIL_BENCHMARK/$stencil_name"
 echo
 echo $stencil_name
-patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
+time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
 cd temp/$stencil_name
 make
 ./bench 62 64 8 8 8 2 
@@ -44,7 +44,7 @@ stencil_name="wave-1-float.stc"
 stencil_path="$STENCIL_BENCHMARK/$stencil_name"
 echo
 echo $stencil_name
-patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
+time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
 cd temp/$stencil_name
 make
 ./bench 64 64 64 16 16 16 8 2:2 
@@ -54,7 +54,7 @@ stencil_name="wave-2-double.stc"
 stencil_path="$STENCIL_BENCHMARK/$stencil_name"
 echo
 echo $stencil_name
-patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path  --architecture=$arch 
+time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path  --architecture=$arch 
 cd temp/$stencil_name
 make
 ./bench 64 64 64 16 16 16 8 2 
@@ -65,7 +65,7 @@ stencil_name="edge-float.stc"
 stencil_path="$STENCIL_BENCHMARK/$stencil_name"
 echo
 echo $stencil_name
-patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
+time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
 cd temp/$stencil_name
 make
 ./bench 62 64 16 16 8 2 
@@ -75,7 +75,7 @@ stencil_name="game-of-life-float.stc"
 stencil_path="$STENCIL_BENCHMARK/$stencil_name"
 echo
 echo $stencil_name
-patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch --validation-tolerance=1e-3
+time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch --validation-tolerance=1e-3
 cd temp/$stencil_name
 make
 ./bench 62 64 16 16 8 2 
@@ -85,7 +85,7 @@ stencil_name="divergence-double.stc"
 stencil_path="$STENCIL_BENCHMARK/$stencil_name"
 echo
 echo $stencil_name
-patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
+time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
 cd temp/$stencil_name
 make
 ./bench 62 64 16 8 8 8 8 2 
@@ -95,7 +95,7 @@ stencil_name="gradient-double.stc"
 stencil_path="$STENCIL_BENCHMARK/$stencil_name"
 echo
 echo $stencil_name
-patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
+time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
 cd temp/$stencil_name
 make
 ./bench 62 64 16 8 8 8 8 2 
@@ -105,7 +105,7 @@ stencil_name="laplacian-double.stc"
 stencil_path="$STENCIL_BENCHMARK/$stencil_name"
 echo
 echo $stencil_name
-patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
+time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
 cd temp/$stencil_name
 make
 ./bench 62 64 64 16 16 16 8 2 
@@ -117,7 +117,7 @@ stencil_name="laplacian6-float.stc"
 stencil_path="$STENCIL_BENCHMARK/$stencil_name"
 echo
 echo $stencil_name
-patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path  --architecture=$arch 
+time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path  --architecture=$arch 
 cd temp/$stencil_name
 make
 ./bench 62 64 64 16 16 16 8 2 
@@ -127,7 +127,7 @@ stencil_name="hinterp.stc"
 stencil_path="$STENCIL_BENCHMARK/$stencil_name"
 echo
 echo $stencil_name
-patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
+time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
 cd temp/$stencil_name
 make
 ./bench 62 64 8 8 8 2 
@@ -137,7 +137,7 @@ stencil_name="vinterp-float.stc"
 stencil_path="$STENCIL_BENCHMARK/$stencil_name"
 echo
 echo $stencil_name
-patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
+time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
 cd temp/$stencil_name
 make
 ./bench 62 64 8 8 8 2 
@@ -147,7 +147,7 @@ stencil_name="tricubic-double.stc"
 stencil_path="$STENCIL_BENCHMARK/$stencil_name"
 echo
 echo $stencil_name
-patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
+time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
 cd temp/$stencil_name
 make
 ./bench 62 64 32 16 16 8 8 2 
