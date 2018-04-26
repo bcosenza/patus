@@ -50,9 +50,9 @@ The you need the Java compiler to compile Patus. We highly recommend to use the 
 > sudo apt update
 > sudo apt install oracle-java8-installer
 ```
-On Raspberry PI, it may be necessary to install one more package to enable the _apt-add-repository_ command:
+On Raspberry PI, it should be already installed; in case, just type the following to install it:
 ```
-> sudo apt-get install software-properties-common 
+> sudo apt install oracle-java8-jdk
 ```
 
 Be sure to set your JAVA_HOME environment variable to point to the installed JDK. Additionally, set your PATH environment variable. For example, run the following commands if using Solaris.
