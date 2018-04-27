@@ -86,7 +86,8 @@ Optionally, you may install:
 
 ### 2. Configure PATUS
 
-To configure the environment for Patus, a script configure_patus.sh is provided. If no argument is provided, it will assume as that you want to use the the _x86_64 SSE_ backend:
+Once you cloned the _patus-aa_ repository, you will find the necessary scripts into the _tune_ folder.
+To configure the environment for Patus, the script _configure_patus.sh_ is provided. If no argument is provided, it will assume as that you want to use the the _x86_64 SSE_ backend:
 ```
 > source configure_patus.sh
 ```
