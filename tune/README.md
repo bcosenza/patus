@@ -50,10 +50,6 @@ The you need the Java compiler to compile Patus. We highly recommend to use the 
 > sudo apt update
 > sudo apt install oracle-java8-installer
 ```
-On Raspberry PI, it should be already installed; in case, just type the following to install it:
-```
-> sudo apt install oracle-java8-jdk
-```
 
 Be sure to set your JAVA_HOME environment variable to point to the installed JDK. Additionally, set your PATH environment variable. For example, run the following commands if using Solaris.
 ```
@@ -79,6 +75,11 @@ Optionally, you may install:
 - Python and Pythons's required libraries (used by Patus-AA for scripting and plotting)
 ```
 > sudo apt install python-numpy python-scipy python-matplotlib 
+```
+
+*Note for Raspberry PI*: many packages are already installed. For Java, if no installed, it should be possible to install it with:
+```
+> sudo apt install oracle-java8-jdk
 ```
 
 
