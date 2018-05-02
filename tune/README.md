@@ -109,6 +109,11 @@ For example, you can build and run all the available test benchmarks with the fo
 > bash ./patus_all.sh
 ```
 
+*Note for Raspberry PI*: the double compilation process (Patus + gcc) takes long time on ARM.  For example, the  _blur-float_ stencil kernel takes approx 3 min 20 sec (Patus) + 2 m 6 sec (gcc) on a Raspberry PI3, while it only takes 12 sec (Patus) + 2 sec (gcc) on an Intel i5 using the cross compilation. For this reason, the default ARM backend use the gcc cross compilation compiler _arm-linux-gnueabihf-gcc_. You can install it on a Intel-based linux machine with the following:
+```
+> sudo apt install gcc-arm-linux-gnueabihf
+```
+
 
 ## Install SVM Rank
  
