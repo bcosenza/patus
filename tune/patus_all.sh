@@ -36,8 +36,10 @@ stencil_2d_set="hinterp-double.stc hinterp-float.stc vinterp-float.stc vinterp-d
 ### list of 3d kernels
 stencil_3d_set="gradient-float.stc gradient-double.stc laplacian-float.stc laplacian-double.stc laplacian6-float.stc laplacian6-double.stc tricubic-float.stc tricubic-double.stc wave-1-double.stc wave-1-float.stc wave-2-double.stc wave-2-float.stc"
 
-
+echo
 echo double compilation of 2d stencil benchmarks
+echo
+
 for stencil_name in $stencil_2d_set
 do 
   stencil_path="$STENCIL_BENCHMARK/$stencil_name"
@@ -50,8 +52,10 @@ do
   cd ../..
 done
 
-
+echo
 echo double compilation of 3d stencil benchmarks
+echo
+
 for stencil_name in $stencil_3d_set
 do 
   stencil_path="$STENCIL_BENCHMARK/$stencil_name"
@@ -61,7 +65,9 @@ do
   cd temp/$stencil_name
   time make
   ./bench 64 64 64 16 16 16 8 2 
-cd ../..
+  cd ../..
+done
 
-
+echo
+echo "compilation complete"
 
