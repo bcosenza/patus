@@ -58,7 +58,7 @@ Be sure to set your JAVA_HOME environment variable to point to the installed JDK
 > export PATH
 ```
 
-In case of multiple JAva installation, you can check whether you are really using the Oracle JVM with: 
+In case of multiple Java installation, you can check whether you are really using the Oracle JVM with: 
 ```
 > java -version
 ```
@@ -77,11 +77,17 @@ Optionally, you may install:
 > sudo apt install python-numpy python-scipy python-matplotlib 
 ```
 
+*Note for Raspberry PI*: many packages are already installed. For Java, if no installed, it should be possible to install it with:
+```
+> sudo apt install oracle-java8-jdk
+```
+
 
 
 ### 2. Configure PATUS
 
-To configure the environment for Patus, a script configure_patus.sh is provided. If no argument is provided, it will assume as that you want to use the the _x86_64 SSE_ backend:
+Once you cloned the _patus-aa_ repository, you will find the necessary scripts into the _tune_ folder.
+To configure the environment for Patus, the script _configure_patus.sh_ is provided. If no argument is provided, it will assume as that you want to use the the _x86_64 SSE_ backend:
 ```
 > source configure_patus.sh
 ```
@@ -101,6 +107,11 @@ All scripts starting with the prefix _patus_ allow you to test the Patus stencil
 For example, you can build and run all the available test benchmarks with the following command (note: takes about 1h):
 ```
 > bash ./patus_all.sh
+```
+
+*Note for Raspberry PI*: the double compilation process (Patus + gcc) takes long time on ARM.  For example, the  _blur-float_ stencil kernel takes approx 3 min 20 sec (Patus) + 2 m 6 sec (gcc) on a Raspberry PI3, while it only takes 12 sec (Patus) + 2 sec (gcc) on an Intel i5 using the cross compilation. For this reason, the default ARM backend use the gcc cross compilation compiler _arm-linux-gnueabihf-gcc_. You can install it on a Intel-based linux machine with the following:
+```
+> sudo apt install gcc-arm-linux-gnueabihf
 ```
 
 
