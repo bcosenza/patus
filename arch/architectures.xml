@@ -19,16 +19,15 @@
 		</declspecs>
 		<intrinsics>
 			<!-- intrinsics for double precision arithmetic operations -->
-<!--
-			<intrinsic base-name="unary_minus" name="neg_pd" datatype="__m128d"/>
-			<intrinsic base-name="plus" name="_mm_add_pd" datatype="__m128d"/>
-			<intrinsic base-name="minus" name="_mm_sub_pd" datatype="__m128d"/>
-			<intrinsic base-name="multiply" name="_mm_mul_pd" datatype="__m128d"/>
-			<intrinsic base-name="divide" name="_mm_div_pd" datatype="__m128d"/>
-			<intrinsic base-name="sqrt" name="_mm_sqrt_pd" datatype="__m128d"/>
-			<intrinsic base-name="min" name="_mm_min_pd" datatype="__m128d"/>
-			<intrinsic base-name="max" name="_mm_max_pd" datatype="__m128d"/>
--->			
+ 			<intrinsic base-name="unary_minus" name="vnegq_f64"  datatype="float64x2_t"/> 
+			<intrinsic base-name="plus"        name="vaddq_f64"  datatype="float64x2_t"/>
+			<intrinsic base-name="minus"       name="vsubq_f64"  datatype="float64x2_t"/>
+			<intrinsic base-name="multiply"    name="vmulq_f64"  datatype="float64x2_t"/>
+ 			<intrinsic base-name="divide"      name="vdivq_f64"  datatype="float64x2_t"/>  
+			<intrinsic base-name="sqrt"        name="vsqrtq_f64" datatype="float64x2_t"/>  
+			<intrinsic base-name="min"         name="vminq_f64"  datatype="float64x2_t"/> 
+			<intrinsic base-name="max"         name="vmaxq_f64"  datatype="float64x2_t"/>
+
 			<!-- ssemathlib.h -->
 <!--			
 			<intrinsic base-name="ceil" name="ceil_pd" datatype="__m128d"/>
@@ -50,14 +49,14 @@
 -->
 						
 			<!-- intrinsics for single precision arithmetic operations -->
-<!-- 			<intrinsic base-name="unary_minus" name="neg_ps" datatype="float32x4_t"/> TODO  -->
-			<intrinsic base-name="plus" name="vaddq_f32" datatype="float32x4_t"/>
-			<intrinsic base-name="minus" name="vsubq_f32" datatype="float32x4_t"/>
-			<intrinsic base-name="multiply" name="vmulq_f32" datatype="float32x4_t"/>
-<!-- 			<intrinsic base-name="divide" name="_mm_div_ps" datatype="float32x4_t"/>  TODO  -->
-<!--			<intrinsic base-name="sqrt" name="_mm_sqrt_ps" datatype="float32x4_t"/>  TODO  -->
-			<intrinsic base-name="min" name="vminq_f32" datatype="float32x4_t"/> 
-			<intrinsic base-name="max" name="vmaxq_f32" datatype="float32x4_t"/>
+ 			<intrinsic base-name="unary_minus" name="vnegq_f32"  datatype="float32x4_t"/> 
+			<intrinsic base-name="plus"        name="vaddq_f32"  datatype="float32x4_t"/>
+			<intrinsic base-name="minus"       name="vsubq_f32"  datatype="float32x4_t"/>
+			<intrinsic base-name="multiply"    name="vmulq_f32"  datatype="float32x4_t"/>
+ 			<intrinsic base-name="divide"      name="vdivq_f32"  datatype="float32x4_t"/>  
+			<intrinsic base-name="sqrt"        name="vsqrtq_f32" datatype="float32x4_t"/>  
+			<intrinsic base-name="min"         name="vminq_f32"  datatype="float32x4_t"/> 
+			<intrinsic base-name="max"         name="vmaxq_f32"  datatype="float32x4_t"/>
 			<!-- ssemathlib.h -->
 <!--		<intrinsic base-name="ceil" name="ceil_ps" datatype="float32x4_t"/>
 			<intrinsic base-name="floor" name="floor_ps" datatype="float32x4_t"/>
