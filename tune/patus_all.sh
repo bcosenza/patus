@@ -28,127 +28,40 @@ fi
 
 
 ### ------------------------------------------------------------ ###
-### Compile and executes a some stencil benchmarks 
+### Compile and executes all stencil benchmarks
 
-stencil_name="blur-float.stc"
-stencil_path="$STENCIL_BENCHMARK/$stencil_name"
-echo
-echo $stencil_name
-time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
-cd temp/$stencil_name
-make
-./bench 62 64 8 8 8 2 
+### list of 2d kernels
+stencil_2d_set="hinterp-double.stc hinterp-float.stc vinterp-float.stc vinterp-double.stc divergence-double.stc divergence-float.stc edge-double.stc edge-float.stc game-of-life-double.stc game-of-life-float.stc blur-float.stc  blur-double.stc"
+
+### list of 3d kernels
+stencil_3d_set="gradient-float.stc gradient-double.stc laplacian-float.stc laplacian-double.stc laplacian6-float.stc laplacian6-double.stc tricubic-float.stc tricubic-double.stc wave-1-double.stc wave-1-float.stc wave-2-double.stc wave-2-float.stc"
+
+
+echo double compilation of 2d stencil benchmarks
+for stencil_name in $stencil_2d_set
+do 
+  stencil_path="$STENCIL_BENCHMARK/$stencil_name"
+  echo
+  echo $stencil_name
+  time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
+  cd temp/$stencil_name
+  time make
+  ./bench 64 64 8 8 8 2 
+  cd ../..
+done
+
+
+echo double compilation of 3d stencil benchmarks
+for stencil_name in $stencil_3d_set
+do 
+  stencil_path="$STENCIL_BENCHMARK/$stencil_name"
+  echo
+  echo $stencil_name
+  time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
+  cd temp/$stencil_name
+  time make
+  ./bench 64 64 64 16 16 16 8 2 
 cd ../..
 
-stencil_name="wave-1-float.stc"
-stencil_path="$STENCIL_BENCHMARK/$stencil_name"
-echo
-echo $stencil_name
-time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
-cd temp/$stencil_name
-make
-./bench 64 64 64 16 16 16 8 2:2 
-cd ../..
-
-stencil_name="wave-2-double.stc"
-stencil_path="$STENCIL_BENCHMARK/$stencil_name"
-echo
-echo $stencil_name
-time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path  --architecture=$arch 
-cd temp/$stencil_name
-make
-./bench 64 64 64 16 16 16 8 2 
-cd ../..
 
 
-stencil_name="edge-float.stc"
-stencil_path="$STENCIL_BENCHMARK/$stencil_name"
-echo
-echo $stencil_name
-time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
-cd temp/$stencil_name
-make
-./bench 62 64 16 16 8 2 
-cd ../..
-
-stencil_name="game-of-life-float.stc"
-stencil_path="$STENCIL_BENCHMARK/$stencil_name"
-echo
-echo $stencil_name
-time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch --validation-tolerance=1e-3
-cd temp/$stencil_name
-make
-./bench 62 64 16 16 8 2 
-cd ../..
-
-stencil_name="divergence-double.stc"
-stencil_path="$STENCIL_BENCHMARK/$stencil_name"
-echo
-echo $stencil_name
-time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
-cd temp/$stencil_name
-make
-./bench 62 64 16 8 8 8 8 2 
-cd ../..
-
-stencil_name="gradient-double.stc"
-stencil_path="$STENCIL_BENCHMARK/$stencil_name"
-echo
-echo $stencil_name
-time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
-cd temp/$stencil_name
-make
-./bench 62 64 16 8 8 8 8 2 
-cd ../..
-
-stencil_name="laplacian-double.stc"
-stencil_path="$STENCIL_BENCHMARK/$stencil_name"
-echo
-echo $stencil_name
-time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
-cd temp/$stencil_name
-make
-./bench 62 64 64 16 16 16 8 2 
-# NOTE(Biagio) prefething not specified with x86_64 AVX
-#  prefething of 8 gave me an seg. fault
-cd ../..
-
-stencil_name="laplacian6-float.stc"
-stencil_path="$STENCIL_BENCHMARK/$stencil_name"
-echo
-echo $stencil_name
-time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path  --architecture=$arch 
-cd temp/$stencil_name
-make
-./bench 62 64 64 16 16 16 8 2 
-cd ../..
-
-stencil_name="hinterp.stc"
-stencil_path="$STENCIL_BENCHMARK/$stencil_name"
-echo
-echo $stencil_name
-time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
-cd temp/$stencil_name
-make
-./bench 62 64 8 8 8 2 
-cd ../..
-
-stencil_name="vinterp-float.stc"
-stencil_path="$STENCIL_BENCHMARK/$stencil_name"
-echo
-echo $stencil_name
-time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
-cd temp/$stencil_name
-make
-./bench 62 64 8 8 8 2 
-cd ../..
-
-stencil_name="tricubic-double.stc"
-stencil_path="$STENCIL_BENCHMARK/$stencil_name"
-echo
-echo $stencil_name
-time patus --outdir=temp/$stencil_name --strategy=$strategy --unroll=$unroll  --stencil=$stencil_path --architecture=$arch 
-cd temp/$stencil_name
-make
-./bench 62 64 32 16 16 8 8 2 
-cd ../..
