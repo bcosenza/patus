@@ -104,7 +104,8 @@ A list of the supported backends is provided by the command
 ### 3. Getting started with PATUS
 
 All scripts starting with the prefix _patus_ allow you to test the Patus stencil compiler with default parameters (not autotuned). 
-For example, you can build and run all the available test benchmarks with the following command (note: takes about 1h):
+For example, you can build and run all the available test benchmarks with the commands listed below. 
+_Warning: per-stencil compilation times usually goes from <1 min (vinterp) to 25 minutes (laplacian6). Tricuib is the expection of tricubic, with about 3h, and has not been included in this script. To compile all test benchamrks it takes approximately 2h45 on a Intel i5_
 ```
 > bash ./patus_all.sh
 ```
@@ -129,7 +130,7 @@ There are a collection of scripts to build the model and run the TUNE Optimizer
 
 1. [~2 sec] Compile the code generator and auto-generate stencil training code patterns 
 ```
- > bash ml_1_autogen_stencil.sh
+ > bash ml_1_autogen.sh
 ``` 
 
 This step will generate  a number of stencil code in _temp/ml_stencil_code_.
