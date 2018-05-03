@@ -16,12 +16,19 @@ echo Configuration of PATUS
 # set benchmark folder using the absolute path
 export STENCIL_BENCHMARK=$(readlink ../benchmark/ -f)
 echo Setting STENCIL_BENCHMARK to $STENCIL_BENCHMARK
+### list of 2d kernels
+export stencil_2d_set="hinterp-double.stc hinterp-float.stc vinterp-float.stc vinterp-double.stc edge-double.stc edge-float.stc game-of-life-double.stc game-of-life-float.stc blur-float.stc  blur-double.stc"
+### list of 3d kernels
+export stencil_3d_set="gradient-float.stc gradient-double.stc laplacian-float.stc laplacian-double.stc laplacian6-float.stc laplacian6-double.stc divergence-double.stc divergence-float.stc wave-1-double.stc wave-1-float.stc wave-2-double.stc wave-2-float.stc"
+# Warning: there following two codes take (overall) about 5-7 hours for compilation only: tricubic-float.stc tricubic-double.stc
+echo "2D kernels: $stencil_2d_set"
+echo "3D kernels: $stencil_3d_set"
 
-# Set the target architecture
-# if the architecture is not specified, by default x86_64 AVX is used
-# if the parameter ARM is provided, 
+
+# Set the target architecture.
+# If the architecture is not specified, by default x86_64 AVX is used.
+# To enalbe the ARM backend, use the flag "ARM_NEON"
 echo Patus backend configuration
-
 # no argument provided
 if [ $# -eq 0 ]
   then

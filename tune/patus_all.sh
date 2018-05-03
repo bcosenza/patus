@@ -31,10 +31,12 @@ fi
 ### Compile and executes all stencil benchmarks
 
 ### list of 2d kernels
-stencil_2d_set="hinterp-double.stc hinterp-float.stc vinterp-float.stc vinterp-double.stc divergence-double.stc divergence-float.stc edge-double.stc edge-float.stc game-of-life-double.stc game-of-life-float.stc blur-float.stc  blur-double.stc"
+stencil_2d_set="hinterp-double.stc hinterp-float.stc vinterp-float.stc vinterp-double.stc edge-double.stc edge-float.stc game-of-life-double.stc game-of-life-float.stc blur-float.stc  blur-double.stc"
 
 ### list of 3d kernels
-stencil_3d_set="gradient-float.stc gradient-double.stc laplacian-float.stc laplacian-double.stc laplacian6-float.stc laplacian6-double.stc tricubic-float.stc tricubic-double.stc wave-1-double.stc wave-1-float.stc wave-2-double.stc wave-2-float.stc"
+stencil_3d_set="gradient-float.stc gradient-double.stc laplacian-float.stc laplacian-double.stc laplacian6-float.stc laplacian6-double.stc divergence-double.stc divergence-float.stc wave-1-double.stc wave-1-float.stc wave-2-double.stc wave-2-float.stc"
+# Warning: there following two codes take (overall) about 5-7 hours for compilation only.
+# tricubic-float.stc tricubic-double.stc
 
 echo
 echo double compilation of 2d stencil benchmarks
