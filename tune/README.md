@@ -105,7 +105,8 @@ A list of the supported backends is provided by the command
 
 All scripts starting with the prefix _patus_ allow you to test the Patus stencil compiler with default parameters (not autotuned). 
 For example, you can build and run all the available test benchmarks with the commands listed below. 
-_Warning: per-stencil compilation times usually goes from <1 min (vinterp) to 25 minutes (laplacian6). Tricuib is the expection of tricubic, with about 3h, and has not been included in this script. To compile all test benchamrks it takes approximately 2h45 on a Intel i5_
+
+*Warning*: per-stencil compilation times usually goes from <1 min (_vinterp_) to 25 minutes (_laplacian6_). _Tricubic_ is the expection of tricubic, with about 3h, and has not been included in this script. To compile all test benchmarks it takes approximately 2h45 on a Intel i5.
 ```
 > bash ./patus_all.sh
 ```
