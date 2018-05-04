@@ -6,16 +6,17 @@
 # We couldn't find a way to automatically define this threshold, therefore we used Patus' apporach with Wave.
 # 
 
-arch="x86_64 AVX"
+arch=$PATUS_ARCH
 strategy="$PATUS_HOME/strategy/cacheblocked.stg"
 #outdir="$PWD/out"
 unroll="1,2,4,8"
-create_inline_asm="yes"
+#create_inline_asm="yes"
 moreargs=""
 
 
 for f in temp/ml_stencil_code/*.stc
 do
+	echo $f
 	echo "compiling $f [Patus]"	 
 	stencilname=$(basename $f)
 	stencilout=temp/ml_stencil_build/$stencilname

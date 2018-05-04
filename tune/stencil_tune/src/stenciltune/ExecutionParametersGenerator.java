@@ -31,7 +31,7 @@ public class ExecutionParametersGenerator {
 		this.sizes = _sizes;
 		this.isTwoDim = _isTwoDim;
 		
-		// we do NOT set any seeds, despite un-deterministic behavior 
+		// we do not set any seeds
 		rand = new Random();
 		
 		params = new HashSet<ExecutionParams>();		
@@ -110,7 +110,7 @@ public class ExecutionParametersGenerator {
 			System.out.println("Usage:"); 
 			System.out.println("ExecutionParamtersGenerator <N> <sizeX> <sizeY> <sizeZ>"); 
 			System.out.println("where <N> is the number of samples to be generated and <sizeZ> is optional,"); 
-			System.out.println("depending on the dimensionality of the the stencil kernel ");
+			System.out.println("depending on the dimensionality of the the stencil kernel.");
 			
 			//for(String t : args)	System.out.print(" _" + t + "_ " );
 		}

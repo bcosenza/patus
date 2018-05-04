@@ -2,6 +2,7 @@ package stenciltune;
 
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -65,8 +66,7 @@ public class ExampleGenerator {
 
 	
 	/*	Blur goes from -2 to +2, 5x5 samples. It uses grid, but accesses are 2d	*/
-	public static void generateBlur(int sizex, int sizey){
-		boolean useDouble = false;
+	public static void generateBlur(boolean useDouble, int sizex, int sizey){
 		int type = (useDouble ? 1 : 0);
 		int bufferNum = 1;		
 		StencilPattern sp = sg.getHypercube2D(2);
@@ -80,8 +80,7 @@ public class ExampleGenerator {
 		
 	
 	/* Wave1 is 3d, laplacian with a t-2 dependence */
-	public static void generateWave1(int size){
-		boolean useDouble = false;
+	public static void generateWave1(boolean useDouble, int size){
 		int type = (useDouble ? 1 : 0);
 		int bufferNum = 1;		
 		StencilPattern sp = sg.getLaPlacian3D(2);
@@ -96,8 +95,7 @@ public class ExampleGenerator {
 	
 	
 	/* Wave2 is like wave1, but it uses the sum() function to sum up closest points, which is not currently encoded as feature. */
-	public static void generateWave2(int size){
-		boolean useDouble = false;
+	public static void generateWave2(boolean useDouble, int size){
 		int type = (useDouble ? 1 : 0);
 		int bufferNum = 1;		
 		StencilPattern sp = sg.getLaPlacian3D(2);
@@ -111,8 +109,7 @@ public class ExampleGenerator {
 	
 	
 	/* Tricubic is 3d, uses three in-buffers, and hypercube-like pattern */
-	public static void generateTricubic(int size){
-		boolean useDouble = false;
+	public static void generateTricubic(boolean useDouble, int size){
 		int type = (useDouble ? 1 : 0);
 		int bufferNum = 3; // 3 reads + 1 write
 		
@@ -136,8 +133,7 @@ public class ExampleGenerator {
 	
 	
 	/* Edge is 2d hypercube of size 1 (a square) */
-	public static void generateEdge(int size){
-		boolean useDouble = false;
+	public static void generateEdge(boolean useDouble, int size){
 		int type = (useDouble ? 1 : 0);
 		int bufferNum = 1;	
 		
@@ -152,8 +148,7 @@ public class ExampleGenerator {
 	
 	
 	/* Game-of-life is similar to edge */
-	public static void generateGameOfLife(int size){
-		boolean useDouble = false;
+	public static void generateGameOfLife(boolean useDouble, int size){
 		int type = (useDouble ? 1 : 0);
 		int bufferNum = 1; 
 		
@@ -168,8 +163,7 @@ public class ExampleGenerator {
 	
 	
 	/* Divergence is a 3d laplacian working on three in-buffers. Note: uses double. */
-	public static void generateDivergence(int size){
-		boolean useDouble = true;
+	public static void generateDivergence(boolean useDouble, int size){
 		int type = (useDouble ? 1 : 0);
 		int bufferNum = 3; // 3 in, 1 out 
 		
@@ -186,8 +180,7 @@ public class ExampleGenerator {
 			
 	
 	/*	Gradient has a 3d, laplacian shape. I write to 3 buffers and read from one. It uses double. */
-	public static void generateGradient(int size){
-		boolean useDouble = true;
+	public static void generateGradient(boolean useDouble, int size){
 		int type = (useDouble ? 1 : 0);
 		int bufferNum = 1; // reads 1, write 3
 		
@@ -204,8 +197,7 @@ public class ExampleGenerator {
 	
 	
 	/* Laplacian is a simple 3d, laplacian stencil using double */
-	public static void generateLaplacian(int size){
-		boolean useDouble = true;
+	public static void generateLaplacian(boolean useDouble, int size){
 		int type = (useDouble ? 1 : 0);
 		int bufferNum = 1;
 		StencilPattern sp = sg.getLaPlacian3D(1);
@@ -218,8 +210,7 @@ public class ExampleGenerator {
 	}
 	
 	/* 6th order 3d laplacian stencil */
-	public static void generateLaplacian6(int size){
-		boolean useDouble = true;
+	public static void generateLaplacian6(boolean useDouble, int size){
 		int type = (useDouble ? 1 : 0);
 		int bufferNum = 1;		
 		StencilPattern sp = sg.getLaPlacian3D(3);
@@ -234,8 +225,7 @@ public class ExampleGenerator {
 	}		
 	
 	/* Horizontal interpolation kernel, from HEVC coder */
-	public static void generateHorInterp(int size){
-		boolean useDouble = true;
+	public static void generateHorInterp(boolean useDouble, int size){
 		int type = (useDouble ? 1 : 0);
 		int bufferNum = 1;		
 		StencilPattern sp = sg.getLine2D(4, 0);
@@ -251,8 +241,7 @@ public class ExampleGenerator {
 	}
 	
 	/* Vertical interpolation kernel, from HEVC coder */
-	public static void generateVerInterp(int size){
-		boolean useDouble = true;
+	public static void generateVerInterp(boolean useDouble, int size){
 		int type = (useDouble ? 1 : 0);
 		int bufferNum = 1;		
 		StencilPattern sp = sg.getLine2D(4, 1);
@@ -268,8 +257,8 @@ public class ExampleGenerator {
 	}
 	
 	
-	public static final void main(String args[]) throws Exception {
-
+	public static final void main(String args[]) throws Exception
+	{
 		/// Test Benchmark Pattern Generation ///
 //		generateBlur(128,128);		
 //		generateWave1(128);		
@@ -283,71 +272,88 @@ public class ExampleGenerator {
 //		generateLaplacian6();
 //		generateHorInterp(512);		
 //		generateVerInterp(512);
-		
-		generateAll();
+
+		boolean withTricubic = false;
+		if(Arrays.asList(args).contains("tricubic")) {
+			withTricubic = true;
+			System.out.println("Synthetic code generation includes tricubic-like sum patterns");
+		}
+
+		generateAll(withTricubic);
 	}
 	
 	
-	public static final void generateAll() throws Exception {
+	public static final void generateAll(boolean withTricubic) throws Exception {
 		String basePath = "data/";
 
 		PrintStream stdout = System.out;
-		
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "blur_1024_1024.test", false)));
-		generateBlur(1024,1024);
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "blur_1024_768.test", false)));
-		generateBlur(1024,768);		
 
-		
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "wave-1_64_64_64.test", false)));
-		generateWave1(64);		
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "wave-1_128_128_128.test", false)));
-		generateWave1(128);		
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "wave-1_256_256_256.test", false)));
-		generateWave1(256);		
-		
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "tricubic_128_128_128.test", false)));
-		generateTricubic(128);		
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "tricubic_256_256_256.test", false)));
-		generateTricubic(256);		
+		boolean isDouble[] = {true, false};
+		for(boolean type : isDouble) {
+			String infix = "-float";
+			if(type) infix = "-double";
 
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "edge_512_512.test", false)));
-		generateEdge(512);		
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "edge_1024_1024.test", false)));
-		generateEdge(1024);		
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "blur" + infix + "_1024_1024.test", false)));
+			generateBlur(type,1024, 1024);
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "blur" + infix + "_1024_768.test", false)));
+			generateBlur(type,1024, 768);
 
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "game-of-life_512_512.test", false)));
-		generateGameOfLife(512);		
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "game-of-life_1024_1024.test", false)));
-		generateGameOfLife(1024);		
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "wave-1" + infix + "_64_64_64.test", false)));
+			generateWave1(type,64);
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "wave-1" + infix + "_128_128_128.test", false)));
+			generateWave1(type,128);
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "wave-1" + infix + "_256_256_256.test", false)));
+			generateWave1(type,256);
 
-		
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "divergence_64_64_64.test", false)));
-		generateDivergence(64);		
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "divergence_128_128_128.test", false)));
-		generateDivergence(128);		
+			if (withTricubic) {
+				System.setOut(new PrintStream(new FileOutputStream(basePath + "tricubic" + infix + "_128_128_128.test", false)));
+				generateTricubic(type,128);
+				System.setOut(new PrintStream(new FileOutputStream(basePath + "tricubic" + infix + "_256_256_256.test", false)));
+				generateTricubic(type,256);
+			}
 
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "gradient_128_128_128.test", false)));
-		generateGradient(128);		
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "gradient_256_256_256.test", false)));
-		generateGradient(256);		
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "edge" + infix + "_512_512.test", false)));
+			generateEdge(type,512);
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "edge" + infix + "_1024_1024.test", false)));
+			generateEdge(type,1024);
 
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "laplacian_128_128_128.test", false)));
-		generateLaplacian(128);		
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "laplacian_256_256_256.test", false)));
-		generateLaplacian(256);		
-
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "laplacian6_128_128_128.test", false)));
-		generateLaplacian6(128);		
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "laplacian6_256_256_256.test", false)));
-		generateLaplacian6(256);		
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "game-of-life" + infix + "_512_512.test", false)));
+			generateGameOfLife(type,512);
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "game-of-life" + infix + "_1024_1024.test", false)));
+			generateGameOfLife(type,1024);
 
 
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "hinterp_1024_1024.test", false)));
-		generateHorInterp(1024);		
-		System.setOut(new PrintStream(new FileOutputStream(basePath + "vinterp_1024_1024.test", false)));
-		generateVerInterp(1024);
-		
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "divergence" + infix + "_64_64_64.test", false)));
+			generateDivergence(type,64);
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "divergence" + infix + "_128_128_128.test", false)));
+			generateDivergence(type,128);
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "divergence" + infix + "_256_256_256.test", false)));
+			generateDivergence(type,256);
+
+
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "gradient" + infix + "_128_128_128.test", false)));
+			generateGradient(type,128);
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "gradient" + infix + "_256_256_256.test", false)));
+			generateGradient(type,256);
+
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "laplacian" + infix + "_128_128_128.test", false)));
+			generateLaplacian(type,128);
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "laplacian" + infix + "_256_256_256.test", false)));
+			generateLaplacian(type,256);
+
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "laplacian6" + infix + "_128_128_128.test", false)));
+			generateLaplacian6(type,128);
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "laplacian6" + infix + "_256_256_256.test", false)));
+			generateLaplacian6(type,256);
+
+
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "hinterp" + infix + "_1024_1024.test", false)));
+			generateHorInterp(type,1024);
+			System.setOut(new PrintStream(new FileOutputStream(basePath + "vinterp" + infix + "_1024_1024.test", false)));
+			generateVerInterp(type,1024);
+
+		}
+
 		stdout.println("Test set features generated in " + basePath);
 		
 	}

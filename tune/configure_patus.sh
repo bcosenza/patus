@@ -19,10 +19,10 @@ echo Setting STENCIL_BENCHMARK to $STENCIL_BENCHMARK
 ### list of 2d kernels
 export stencil_2d_set="hinterp-double.stc hinterp-float.stc vinterp-float.stc vinterp-double.stc edge-double.stc edge-float.stc game-of-life-double.stc game-of-life-float.stc blur-float.stc  blur-double.stc"
 ### list of 3d kernels
-export stencil_3d_set="gradient-float.stc gradient-double.stc laplacian-float.stc laplacian-double.stc laplacian6-float.stc laplacian6-double.stc divergence-double.stc divergence-float.stc wave-1-double.stc wave-1-float.stc wave-2-double.stc wave-2-float.stc"
+export stencil_3d_set="gradient-float.stc gradient-double.stc laplacian-float.stc laplacian-double.stc laplacian6-float.stc laplacian6-double.stc divergence-double.stc divergence-float.stc wave-1-double.stc wave-1-float.stc"
 # Warning: there following two codes take (overall) about 5-7 hours for compilation only: tricubic-float.stc tricubic-double.stc
-echo "2D kernels: $stencil_2d_set"
-echo "3D kernels: $stencil_3d_set"
+# the reasons seems relate to the "sum" keyword, used for reduction, which does not scale nicely with the number of stencil points (Note by Biagio: this is my guess, but more evidence is necessary).
+# Also two more codes use "sum" and have, therefore, been removed: wave-2-double.stc wave-2-float.stc
 
 
 # Set the target architecture.
@@ -38,6 +38,11 @@ if [ $# -eq 0 ]
 fi
 echo Setting PATUS_ARCH to $PATUS_ARCH
 export PATUS_ARCH
+
+
+echo "2D kernels: $stencil_2d_set"
+echo "3D kernels: $stencil_3d_set"
+
 
 # setup Patus binary
 cd ..
