@@ -452,7 +452,7 @@ public class StencilGenerator {
 		//StencilPoint.MAX_STENCIL_SIZE = 10;//maxPatternRadius*2+1;				
 		
 		int genBufferNum[] = { 1, 3}; // { 1, 2, 3};
-		int maxTypeSize = 1; // type size is 0 for 3d-bit types (float and int), or 1 for 64 (double)  
+		int maxTypeSize = 1; // type size is 0 for 32-bit types (float and int), or 1 for 64 (double)
 		
 		
 		System.out.println("Automatic stencil code generation in " + outputFolderString);
