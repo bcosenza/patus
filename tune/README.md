@@ -160,7 +160,7 @@ For an estimation of the stencil execution time for different datasets, have a l
 
 4. [less than 1 min] Prepare all the collected data for the training phase, using the SVM-Rank data format.
 ```
-> bash ml_4_prepare_training.sh
+> bash ml_4_training.sh
 ```
  
  This step will create an output file in temp named _training_size_SX.txt_, where _SX_ is the size of the training set.
@@ -209,7 +209,7 @@ Create different datasets with different sizes and same parameters.
 
 [<20 seconds for each dataset]
 ```
-> bash ml_5_evaluate_all.sh
+> bash ml_5_evaluate.sh
 ```
 For each dataset, builds a model with the same parameters  (_C=0.01_ and _linear kernel_), does regression and executes the top-ranked configuration.
 If more datasets are available, this step takes longer teme, as it is repeated for each file in: _temp/training*.txt_.
