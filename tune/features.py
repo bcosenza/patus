@@ -31,12 +31,7 @@ def extract(filename):
             buffer_count  += 1
             if "const" in line:
                 const_buffer_count += 1
-        # shape [ ]
-        #print("match")
-        #shapefinder = re.compile('\[.+;.+\]') # [*]
-
-        # 2d points features, assume variables are always called x, y, z
-        print("find 2d features")
+        # shape
         line = line.replace(" ", "") # removing any space
         #shapefinder = re.compile('\[[a-zA-Z][+-]?[0-9]?,\s[a-zA-Z][+-][0-9];\st\]')  # [ [a][+-][0-9],[a][+-][0-9]; t ]  ==> 2D points
         if(dimension == 2):
@@ -51,21 +46,21 @@ def extract(filename):
             z = int(0)
             pat_x = re.compile('x[+-]?[0-9]?').findall(access)
             pat_x = pat_x[0]
-            print(" x:",pat_x)
+            #print(" x:",pat_x)
             if pat_x and len(pat_x)>1:
                 x = int(pat_x[1:])
             pat_y = re.compile('y[+-]?[0-9]?').findall(access)
             pat_y = pat_y[0]
-            print(" y:",pat_y)
+            #print(" y:",pat_y)
             if pat_y and len(pat_y)>1:
                 y = int(pat_y[1:])
             if dimension == 3: # if 3d
                 pat_z = re.compile('z[+-]?[0-9]?').findall(access)
                 pat_z = pat_z[0]
-                print(" z:",pat_z)
+                #print(" z:",pat_z)
                 if pat_z and len(pat_z)>1:
                     z = int(pat_z[1:])
-            print(x,y,z)
+            #print(x,y,z)
             #numpattern = [int(x) for x in pattern.findall(access)]
             points.append([x,y,z])
 
@@ -106,13 +101,16 @@ def extract(filename):
             else:
                 print('.', end='')
         print()
+
+    # write into a vector
+    # XXX TODO
     return
 
 def main():
     if len(sys.argv) != 2:
-        print("Utility to extract and print ")
-        print("Note: it is just a scannner, does not perform a real parsing; may be not accurate.")
-        print("expected argument: patus_filename")
+        print("Utility to extract and print static features of a Patus stencil code")
+        print("Note: it is just a scanner, does not perform a real parsing; may be not accurate.")
+        print("Usage: features.py <patus_filename>")
         return 0
     print(sys.argv[1])
     extract(sys.argv[1])
